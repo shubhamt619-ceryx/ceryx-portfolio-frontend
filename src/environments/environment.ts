@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  appVersion: 'v726demo1',
+  appVersion: 'ceryxPortfoliov0.0.1',
   USERDATA_KEY: 'authf649fc9a5f55',
-  isMockEnabled: true,
-  apiUrl: 'https://your-domain.com/api'
+  isMockEnabled: false,
+  apiUrl: 'http://103.148.157.103:8081/'
 };
 
 /*

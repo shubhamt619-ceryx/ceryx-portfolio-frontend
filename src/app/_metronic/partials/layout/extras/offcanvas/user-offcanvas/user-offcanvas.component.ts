@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../../core';
 import { Observable } from 'rxjs';
-import { UserModel } from '../../../../../../modules/auth/_models/user.model';
-import { AuthService } from '../../../../../../modules/auth/_services/auth.service';
+import { UserModel } from 'src/app/_ceryx/models/user.model';
+import { AuthService } from 'src/app/_ceryx/services/auth.service';
+//import { UserModel } from '../../../../../../modules/auth/_models/user.model';
+//import { AuthService } from '../../../../../../modules/auth/_services/auth.service';
 
 @Component({
   selector: 'app-user-offcanvas',

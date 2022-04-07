@@ -5,7 +5,8 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from 'src/app/_ceryx/services/auth.service';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
