@@ -1,6 +1,6 @@
 {
-    "name": "metronic-angular-demo1",
-    "version": "7.2.6",
+    "name": "ceryx-portfolio-frontend",
+    "version": "0.0.1",
     "scripts": {
         "ng": "ng",
         "start": "ng serve --host 0.0.0.0",
