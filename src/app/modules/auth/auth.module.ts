@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
+import { LoginModernComponent } from './login-modern/login-modern.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -14,6 +15,7 @@ import { MaterialModule } from '../material/material.module';
 @NgModule({
   declarations: [
     LoginComponent,
+    LoginModernComponent,
     RegistrationComponent,
     ForgotPasswordComponent,
     LogoutComponent,

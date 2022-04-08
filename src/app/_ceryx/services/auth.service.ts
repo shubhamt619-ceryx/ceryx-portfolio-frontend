@@ -50,8 +50,8 @@ export class AuthService {
             this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
             this.currentUser$ = this.currentUserSubject.asObservable();
             this.isLoading$ = this.isLoadingSubject.asObservable();
-            // const subscr = this.getUserByToken().subscribe();
-            // this.subscriptions.push(subscr);
+            const subscr = this.getUserByToken().subscribe();
+            this.subscriptions.push(subscr);
          }
     
 
@@ -124,9 +124,9 @@ export class AuthService {
         'Content-Type':  'application/json', 
         'Authorization': `Bearer ${auth.authToken}`,
        });
-       this.http.get<UserModel>(baseUrl + 'user/profile', {
+       return this.http.get<UserModel>(baseUrl + 'user/profile', {
         headers: httpHeaders,
-       }).subscribe(res => {});
+       }).pipe()
   }
 
  
@@ -144,6 +144,4 @@ export class AuthService {
         return throwError(() => new Error('Something bad happened; please try again later.'));
       }
 
-
-    
-}
+  }

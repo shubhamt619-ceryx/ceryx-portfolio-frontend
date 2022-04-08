@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AuthComponent} from './auth.component';
 import {LoginComponent} from './login/login.component';
+import { LoginModernComponent } from './login-modern/login-modern.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {LogoutComponent} from './logout/logout.component';
@@ -20,6 +21,11 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+        data: {returnUrl: window.location.pathname}
+      },
+      {
+        path: 'login-modern',
+        component: LoginModernComponent,
         data: {returnUrl: window.location.pathname}
       },
       {

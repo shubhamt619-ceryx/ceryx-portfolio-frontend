@@ -22,7 +22,9 @@ import { AuthService } from './_ceryx/services/auth.service';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
-      authService.getUserByToken().subscribe().add(resolve);
+      authService.getUserByToken().subscribe(res => {
+        console.log(res, 'Promise');
+      }).add(resolve);
     });
   };
 }
