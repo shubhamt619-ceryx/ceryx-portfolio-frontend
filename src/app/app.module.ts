@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,14 +18,14 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { AuthService } from './_ceryx/services/auth.service';
+import {ButtonModule} from 'primeng-lts/button';
+import {TableModule} from 'primeng-lts/table';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
-      authService.getUserByToken().subscribe(res => {
-        console.log(res, 'Promise');
-      }).add(resolve);
+      authService.getUserByToken().subscribe().add(resolve);
     });
   };
 }
@@ -34,6 +35,8 @@ function appInitializer(authService: AuthService) {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     SplashScreenModule,
     TranslateModule.forRoot(),
@@ -51,6 +54,9 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
+    //PrimeNg
+    TableModule,
+    ButtonModule,
   ],
   providers: [
     {

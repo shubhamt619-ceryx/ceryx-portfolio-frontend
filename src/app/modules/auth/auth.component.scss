@@ -3,6 +3,55 @@
 :host {
   height: 100%;
 }
+
 .bg-custom {
- background-image: url(../../../assets);
+  background-image: url("../../../assets/media/bg/main_bg.png") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: white;
 }
+
+.login_content_section {
+  display: grid !important;
+  grid-template-columns: auto auto auto;
+  grid-template-areas: "logo dividend login-content";
+  width: 100%;
+  margin: auto !important;
+}
+
+.login-aside {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "logo dividend";
+  width: 100%;
+  margin: auto;
+}
+
+.logo {
+  grid-area: "logo";
+  margin: auto;
+}
+
+
+.dividend {
+  grid-area: "dividend";
+  margin: auto !important;
+
+}
+
+.login-content {
+  grid-area: "dividend";
+  margin: auto !important;
+}
+
+// .logo {
+//   position: fixed;
+//   top: 500px;
+//   left: 272px;
+// }
+
+// .dividend {
+//   position: fixed;
+//   top: 430px;
+//   left: 946px;
+// }

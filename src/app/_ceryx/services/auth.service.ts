@@ -6,6 +6,9 @@ import { UserModel } from '../models/user.model';
 import { AuthModel } from 'src/app/modules/auth/_models/auth.model';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Router } from '@angular/router';
+import { JsonResponseModel } from '../models/json-response.model';
+import { finalize, map } from 'rxjs/operators';
+
 
 const jwtHelper = new JwtHelperService();
 
@@ -50,7 +53,7 @@ export class AuthService {
             this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
             this.currentUser$ = this.currentUserSubject.asObservable();
             this.isLoading$ = this.isLoadingSubject.asObservable();
-            const subscr = this.getUserByToken().subscribe();
+            const subscr = this.getUserByToken().subscribe()
             this.subscriptions.push(subscr);
          }
     
@@ -109,25 +112,43 @@ export class AuthService {
     }
 
     this.isLoadingSubject.next(true);
-    // return this.authHttpService.getUserByToken(auth.authToken).pipe(
-    //   map((user: UserModel) => {
-    //     if (user) {
-    //       this.currentUserSubject = new BehaviorSubject<UserModel>(user);
-    //     } else {
-    //       this.logout();
-    //     }
-    //     return user;
-    //   }),
-    //   finalize(() => this.isLoadingSubject.next(false))
-    // );
-       const httpHeaders = new HttpHeaders({
-        'Content-Type':  'application/json', 
-        'Authorization': `Bearer ${auth.authToken}`,
-       });
-       return this.http.get<UserModel>(baseUrl + 'user/profile', {
-        headers: httpHeaders,
-       }).pipe()
+    return this.getUserByTokenHttp(auth.authToken).pipe(
+      map((user: any) => {
+        console.log(user , 'sersssssssssss');
+        
+        if (user) {
+          this.currentUserSubject = new BehaviorSubject<UserModel>(user.data);
+        } else {
+          this.logout();
+        }
+        return user.data;
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
   }
+  
+
+      private  getUserByTokenHttp(authToken): Observable<any> {
+        const httpHeaders = new HttpHeaders({
+          'Content-Type':  'application/json', 
+          'Authorization': `Bearer ${authToken}`,
+         });
+         
+        let user = new UserModel();
+        return this.http.get<JsonResponseModel>(baseUrl + 'user/profile', {
+          headers: httpHeaders,
+         });
+         //.subscribe(res => {
+          // if (res.success) {
+          //     user.setUser(res.data);
+          //     console.log('In success condition', user);
+          //     return of(user)
+          // } else {
+          //   console.log('In fail condition', res);
+          //     return of(undefined)
+          // }
+         //})
+      }
 
  
       private handleError(error: HttpErrorResponse) {

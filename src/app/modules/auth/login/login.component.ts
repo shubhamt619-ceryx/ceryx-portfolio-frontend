@@ -4,6 +4,7 @@ import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_ceryx/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { by } from 'protractor';
 
 @Component({
   selector: 'app-login',
@@ -78,15 +79,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     const loginSubscr = this.authService
       .login(this.f.email.value, this.f.password.value).subscribe(response => {
         if (response.success) {
-          this.snackBar.open("Login Success !", null, {
+          console.log('Login Success');
+          let snackBar = this.snackBar.open("Login Success !", null, {
             duration: 1000,
           });
-          this.router.navigate([this.returnUrl]);
+          snackBar.afterDismissed().subscribe(info => {
+            this.router.navigate([this.returnUrl]);
+          });
         } else {
+          console.log('Login failed');
           this.snackBar.open("Login failed ! Invalid credntials ", null, {
             duration: 1000,
           });
         }
+      }, (err) => {
+        console.log('Login failed');
+          this.snackBar.open("Login failed ! Invalid credntials ", null, {
+            duration: 1000,
+          });
       });
     this.subscriptions.push(loginSubscr);
   }

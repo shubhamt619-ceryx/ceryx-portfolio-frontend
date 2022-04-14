@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { AuthService, UserModel } from '../../auth';
+import { UserModel } from 'src/app/_ceryx/models/user.model';
+import { AuthService } from 'src/app/_ceryx/services/auth.service';
 
 @Component({
   selector: 'app-account-information',
@@ -39,11 +40,6 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
     this.formGroup = this.fb.group({
       username: [this.user.username, Validators.required],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      language: [this.user.language],
-      timeZone: [this.user.timeZone],
-      communicationEmail: [this.user.communication.email],
-      communicationSMS: [this.user.communication.sms],
-      communicationPhone: [this.user.communication.phone]
     });
   }
 
@@ -59,13 +55,6 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
     this.user = Object.assign(this.user, {
       username: formValues.username,
       email: formValues.email,
-      language: formValues.language,
-      timeZone: formValues.timeZone,
-      communication: {
-        email: formValues.communicationEmail,
-        sms: formValues.communicationSMS,
-        phone: formValues.communicationPhone
-      }
     });
 
     // Do request to your server for user update, we just imitate user update there

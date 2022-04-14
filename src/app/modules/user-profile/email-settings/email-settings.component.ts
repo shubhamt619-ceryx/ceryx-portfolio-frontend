@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { AuthService, UserModel } from '../../auth';
+import { UserModel } from 'src/app/_ceryx/models/user.model';
+import { AuthService } from 'src/app/_ceryx/services/auth.service';
 
 @Component({
   selector: 'app-email-settings',

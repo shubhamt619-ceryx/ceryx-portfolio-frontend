@@ -176,7 +176,9 @@ export abstract class TableService<T> {
     this._errorMessage.next('');
     const request = this.find(this._tableState$.value)
       .pipe(
-        tap((res: TableResponseModel<T>) => {
+        // TableResponseModel<T>
+        tap((res: any) => {
+          console.log(res, 'is response for fetch');
           this._items$.next(res.items);
           this.patchStateWithoutFetch({
             paginator: this._tableState$.value.paginator.recalculatePaginator(

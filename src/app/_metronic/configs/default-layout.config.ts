@@ -67,7 +67,7 @@ export const DefaultLayoutConfig = {
 
   // Page loader
   pageLoader: {
-    type: '', // default|spinner-message|spinner-logo
+    type: 'default', // default|spinner-message|spinner-logo
   },
 
   // Header

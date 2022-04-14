@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { AuthService, UserModel } from '../../auth';
+import { UserModel } from 'src/app/_ceryx/models/user.model';
+import { AuthService } from 'src/app/_ceryx/services/auth.service';
 
 @Component({
   selector: 'app-personal-information',
@@ -38,13 +39,10 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      pic: [this.user.pic],
-      firstname: [this.user.firstname, Validators.required],
-      lastname: [this.user.lastname, Validators.required],
-      companyName: [this.user.companyName, Validators.required],
-      phone: [this.user.phone, Validators.required],
+      profile_pic: [this.user.profile_pic],
+      name: [this.user.name, Validators.required],
+      Mobile_Number: [this.user.mobileNumber, Validators.required],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      website: [this.user.website, Validators.required]
     });
   }
 
@@ -71,15 +69,15 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   getPic() {
-    if (!this.user.pic) {
+    if (!this.user.profile_pic) {
       return 'none';
     }
 
-    return `url('${this.user.pic}')`;
+    return `url('${this.user.profile_pic}')`;
   }
 
   deletePic() {
-    this.user.pic = '';
+    this.user.profile_pic = '';
   }
 
   // helpers for View
