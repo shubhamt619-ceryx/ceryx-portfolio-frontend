@@ -1,8 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Table } from 'primeng-lts/table';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
+import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -29,6 +31,7 @@ export class UsersComponent implements
   products: any;
   constructor(
     private commonService: CommonService,
+    private modalService: NgbModal,
     private cd: ChangeDetectorRef,
     ) { }
 
@@ -67,7 +70,12 @@ export class UsersComponent implements
 
   editUser(user:UserModel) {
     this.user.setUser(user);
-    this.productDialog = true;
+    // this.productDialog = true;
+    const modalRef = this.modalService.open(EditUserModalComponent, { size: 'xl' });
+    modalRef.componentInstance.id = 0;
+    modalRef.result.then(() =>
+      this.loadUsers()
+    );
   }
 
   deleteProduct(user: UserModel) {
@@ -142,7 +150,9 @@ export class UsersComponent implements
       console.log("viewUser Clicked")
   }
   editUserInfo(){
-      console.log("editUserInfo Clicked")
+    let newUser = new UserModel()
+    newUser.clearUser();
+    this.editUser(newUser);
   }
   deleteUser(){
       console.log("deleteUser Clicked")
