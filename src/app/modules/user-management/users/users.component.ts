@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Table } from 'primeng-lts/table';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
@@ -20,6 +21,7 @@ export class UsersComponent implements
 
   selectedUser: UserModel[];
 
+  loading: boolean = true;
   submitted: boolean;
   confirmationService: any;
   messageService: any;
@@ -37,10 +39,10 @@ export class UsersComponent implements
   loadUsers() {
     let usersSub = this.commonService.getRows('user/list-user').subscribe(res => {
       this.users = res.items;
-      console.log(222, this.users);
+      this.loading = false;
       this.cd.detectChanges();
     });
-    this.subscriptions.push(usersSub);
+    this.subscriptions.push(usersSub);  
   }
 
   openNew() {
@@ -130,4 +132,20 @@ export class UsersComponent implements
     this.subscriptions.forEach((sb) => sb.unsubscribe());
   }
 
+  clear(table: Table) {
+    table.clear();
+  }
+  createNewUser(){
+      console.log("New user Clicked")
+  }
+  viewUser(){
+      console.log("viewUser Clicked")
+  }
+  editUserInfo(){
+      console.log("editUserInfo Clicked")
+  }
+  deleteUser(){
+      console.log("deleteUser Clicked")
+  }
 }
+
