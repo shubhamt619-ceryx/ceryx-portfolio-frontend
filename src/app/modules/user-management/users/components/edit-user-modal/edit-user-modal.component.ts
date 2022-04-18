@@ -3,32 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { of, Subscription } from 'rxjs';
 import { catchError, finalize, first, tap } from 'rxjs/operators';
+import { UserModel } from 'src/app/_ceryx/models/user.model';
 import { CustomAdapter, CustomDateParserFormatter, getDateFromString } from '../../../../../_metronic/core';
-import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 
-const EMPTY_USER: User = {
-  firstName: '',
-  lastName: '',
-  dateOfBbirth: '',
-  userName: '',
-  gender: '',
-  ipAddress: '',
-  type: '',
-  dob: new Date(),
-  isDeleted: false,
-  _id: 0,
-  createdBy: '',
-  role: '',
-  email: '',
-  name: '',
-  password: '',
-  createdOn: '',
-  __v: 0,
-  lastLogin: '',
-  mobileNumber: 0,
-  id: undefined
-};
+const EMPTY_USER: UserModel = new UserModel();
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -44,7 +23,7 @@ const EMPTY_USER: User = {
 export class EditUserModalComponent implements OnInit, OnDestroy {
   @Input() _id: number;
   isLoading$;
-  user: User;
+  user: UserModel;
   formGroup: FormGroup;
   private subscriptions: Subscription[] = [];
   constructor(
@@ -68,7 +47,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
           this.modal.dismiss(errorMessage);
           return of(EMPTY_USER);
         })
-      ).subscribe((user: User) => {
+      ).subscribe((user:UserModel ) => {
         this.user = user;
         this.loadForm();
       });
@@ -78,14 +57,9 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      firstName: [this.user.firstName, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
-      lastName: [this.user.lastName, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
+      name: [this.user.firstName, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      dob: [this.user.dateOfBbirth, Validators.compose([Validators.nullValidator])],
       userName: [this.user.userName, Validators.compose([Validators.required])],
-      gender: [this.user.gender, Validators.compose([Validators.required])],
-      ipAddress: [this.user.ipAddress],
-      type: [this.user.type, Validators.compose([Validators.required])]
     });
   }
 
