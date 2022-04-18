@@ -5,19 +5,19 @@
         <ng-container *ngIf="user._id">Edit</ng-container>
         <ng-container *ngIf="!user._id">Create</ng-container>
         user
-        <ng-container *ngIf="user._id">'{{ user.name }}'</ng-container>
+        <!-- <ng-container *ngIf="user._id">{{ user.name }}</ng-container> -->
       </ng-container>
     </div>
   </div>
-  <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px">
-    <ng-container *ngIf="isLoading$ | async">
+  <div class="overlay overlay-block cursor-default modal-body" style="min-height: 404px ">
+    <ng-container *ngIf="isLoading$">
       <div class="overlay-layer bg-transparent">
         <div class="spinner spinner-lg spinner-success"></div>
       </div>
     </ng-container>
 
     <ng-container *ngIf="user">
-      <form action="#" class="form form-label-right" [formGroup]="formGroup">
+      <form action="#" class="form form-label-right" [formGroup]="formGroup" *ngIf="formGroup">
         <div class="form-group row">
           <div class="col-lg-4">
             <label class="form-label">Name</label>
@@ -38,83 +38,79 @@
             </div>
           </div>
           <div class="col-lg-4">
-            <label class="form-label">Username</label>
-            <input type="text" class="form-control form-control-lg form-control-solid" name="username"
-              placeholder="Enter User-Name" autocomplete="off" [class.is-invalid]="isControlInvalid('username')"
-              [class.is-valid]="isControlValid('username')" formControlName="username" />
-            <div class="valid-feedback" *ngIf="isControlValid('username')">
-              username was entered correct
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control form-control-lg form-control-solid" name="email"
+              placeholder="Enter your email" autocomplete="off" [class.is-invalid]="isControlInvalid('email')"
+              [class.is-valid]="isControlValid('email')" formControlName="email" />
+            <div class="valid-feedback" *ngIf="isControlValid('email')">
+              Name was entered correct
             </div>
-            <div class="invalid-feedback" *ngIf="controlHasError('required', 'username')">
-              Username is required
+            <div class="invalid-feedback" *ngIf="controlHasError('required', 'email')">
+              email is required
+            </div>
+            <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'email')">
+              email should have at least 3 symbols
+            </div>
+            <div class="invalid-feedback" *ngIf="controlHasError('maxlength', 'email')">
+              email should have maximum 100 symbols
             </div>
           </div>
           <div class="col-lg-4">
+
             <label class="form-label">Password</label>
-            <input type="text" class="form-control form-control-lg form-control-solid" name="password"
+            <input type="password" class="form-control form-control-lg form-control-solid" name="password"
               placeholder="Enter Password" autocomplete="off" [class.is-invalid]="isControlInvalid('password')"
               [class.is-valid]="isControlValid('password')" formControlName="password" />
             <div class="valid-feedback" *ngIf="isControlValid('password')">
-             Password was entered correct
+              Password was entered correct
             </div>
             <div class="invalid-feedback" *ngIf="controlHasError('required', 'password')">
-             Password is required
+              Password is required
             </div>
           </div>
         </div>
-        <div class="form-group row">
-          <div class="col-lg-4">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control form-control-lg form-control-solid" name="email" placeholder="Enter Email"
-              autocomplete="off" [class.is-invalid]="isControlInvalid('email')"
-              [class.is-valid]="isControlValid('email')" formControlName="email" />
-            <div class="valid-feedback" *ngIf="isControlValid('email')">
-              Email was entered correct
-            </div>
-            <div class="invalid-feedback" *ngIf="controlHasError('required', 'email')">
-              Email is required
-            </div>
-            <div class="invalid-feedback" *ngIf="controlHasError('email', 'email')">
-              Email format is incorrect
-            </div>
+          <div class="form-group row">
+        <div class="col-lg-4">
+          <label class="form-label">Mobile Number</label>
+          <input type="text" class="form-control form-control-lg form-control-solid" name="mobileNumber"
+            placeholder="Enter your Mobile Number" autocomplete="off"
+            [class.is-invalid]="isControlInvalid('mobileNumber')" [class.is-valid]="isControlValid('mobileNumber')"
+            formControlName="mobileNumber" />
+          <div class="valid-feedback" *ngIf="isControlValid('mobileNumber')">
+            Mobile Number was entered correct
           </div>
-          <div class="col-lg-4">
-            <label class="form-label">Mobile Number</label>
-            <input type="number" class="form-control form-control-lg form-control-solid" name="mobileNumber" placeholder="Enter Mobile Number"
-              autocomplete="off" [class.is-invalid]="isControlInvalid('mobileNumber')"
-              [class.is-valid]="isControlValid('mobileNumber')" formControlName="mobileNumber" />
-            <div class="valid-feedback" *ngIf="isControlValid('mobileNumber')">
-              Mobile Number was entered correct
-            </div>
-            <div class="invalid-feedback" *ngIf="controlHasError('required', 'mobileNumber')">
-              Mobile Number is required
-            </div>
-            <div class="invalid-feedback" *ngIf="controlHasError('mobileNumber', 'mobileNumber')">
-              Mobile Number format is incorrect
-            </div>
+          <div class="invalid-feedback" *ngIf="controlHasError('required', 'mobileNumber')">
+            Mobile Number is required
           </div>
-          <div class="col-lg-4">
-            <label>Select Role</label>
-            <select class="form-control form-control-lg form-control-solid" name="role"
-              [class.is-invalid]="isControlInvalid('role')" formControlName="role" placeholder="Please select Role">
-              <option value="0" selected>Please select role</option>
-              <option value="superadmin">Super Admin</option>
-              <option value="useradmin">User Admin</option>
-            </select>
-            <div class="feedback">Please select <b>Role</b></div>
+          <div class="invalid-feedback" *ngIf="controlHasError('minlength(10)', 'mobileNumber')">
+            Mobile Number should have at least 3 symbols
+          </div>
+          <div class="invalid-feedback" *ngIf="controlHasError('maxlength(10)', 'mobileNumber')">
+            Mobile Number should have maximum 100 symbols
           </div>
         </div>
-      </form>
-    </ng-container>
+        <div class="col-lg-4">
+          <label>Select Role</label>
+          <select class="form-control form-control-lg form-control-solid" name="role"
+            [class.is-invalid]="isControlInvalid('role')" formControlName="role" placeholder="Please select Role">
+            <option value="superuser" disabled>Please select Role</option>
+            <option value="superuser">super Admin</option>
+            <option value="staffuser">User Admin</option>
+          </select>
+          <div class="feedback">Please select <b>Role</b></div>
+        </div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">
-      Cancel
+  </form>
+  </ng-container>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">
+    Cancel
+  </button>
+  <ng-container *ngIf="formGroup">
+    <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">
+      Save
     </button>
-    <ng-container *ngIf="user">
-      <button type="submit" class="btn btn-primary btn-elevate" (click)="save()" [disabled]="formGroup.invalid">
-        Save
-      </button>
-    </ng-container>
-  </div>
+  </ng-container>
+</div>
 </div>

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, Subscription } from 'rxjs';
 import { catchError, delay, finalize, tap } from 'rxjs/operators';
+import { UserModel } from 'src/app/_ceryx/models/user.model';
+import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -10,29 +12,22 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./delete-user-modal.component.scss']
 })
 export class DeleteUserModalComponent implements OnInit, OnDestroy {
-  @Input() id: number;
+  @Input() _id: string;
   isLoading = false;
   subscriptions: Subscription[] = [];
 
-  constructor(private usersService: UsersService, public modal: NgbActiveModal) { }
+  constructor(private commonService: CommonService, public modal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }
 
   deleteUser() {
     this.isLoading = true;
-    const sb = this.usersService.delete(this.id).pipe(
-      delay(1000), // Remove it from your code (just for showing loading)
-      tap(() => this.modal.close()),
-      catchError((err) => {
-        this.modal.dismiss(err);
-        return of(undefined);
-      }),
-      finalize(() => {
-        this.isLoading = false;
-      })
-    ).subscribe();
-    this.subscriptions.push(sb);
+    let loadSub = this.commonService.deleteRow('user/delete-user/' + this._id).subscribe(res => {
+      this.isLoading = false;
+      this.modal.close()
+    });
+    this.subscriptions.push(loadSub);
   }
 
   ngOnDestroy(): void {

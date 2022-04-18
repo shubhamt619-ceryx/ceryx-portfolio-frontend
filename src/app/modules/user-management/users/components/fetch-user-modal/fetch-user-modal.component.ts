@@ -2,6 +2,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { UserModel } from 'src/app/_ceryx/models/user.model';
+import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 
@@ -12,34 +14,27 @@ import { UsersService } from '../../services/users.service';
 })
 export class FetchUserModalComponent implements OnInit, OnDestroy {
   @Input() ids: number[];
-  users: User[] = [];
-  isLoading = false;
+  @Input() email: string;
+  users: UserModel[] = [];
+  user: UserModel;
+  isLoading = true;
   subscriptions: Subscription[] = [];
 
-  constructor(private usersService: UsersService, public modal: NgbActiveModal) { }
+  constructor(private commonService: CommonService, public modal: NgbActiveModal) { }
 
   ngOnInit(): void {
     this.loadUser();
   }
 
   loadUser() {
-    const sb = this.usersService.items$.pipe(
-      first()
-    ).subscribe((res: User[]) => {
-      this.users = res.filter(c => this.ids.indexOf(c.id) > -1);
-    });
-    this.subscriptions.push(sb);
-  }
-
-  fetchSelected() {
-    this.isLoading = true;
-    // just imitation, call server for fetching data
-    setTimeout(() => {
+    let dataToPost = { email: this.email }
+    let loadSub = this.commonService.fetchRow('user/userdetails', dataToPost).subscribe(res => {
+      this.user = res;
       this.isLoading = false;
-      this.modal.close();
-    }, 1000);
+    });
+    this.subscriptions.push(loadSub);
   }
-
+  
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());
   }

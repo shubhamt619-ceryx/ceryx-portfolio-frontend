@@ -52,9 +52,7 @@ export class CommonService {
         private http: HttpClient,
         private router: Router,
     ) {
-        console.log('111 Common service loaded');
         let authData = this.getAuthFromSessionStorage();
-        console.log('111 Authdata is ', authData);
         this.authToken = authData.authToken;
     }
 
@@ -85,6 +83,48 @@ export class CommonService {
                   total: response.data.list.length
                 };
                 return result;
+              })
+        );
+    }
+
+    public fetchRow(url:string, data:{}): Observable < any > {
+        const httpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.authToken}`,
+        });
+        return this.http.post<JsonResponseModel> (baseUrl + url, JSON.stringify(data), {
+            headers: httpHeaders,
+        }).pipe(
+            map((response: JsonResponseModel) => {
+                return response.data;
+              })
+        );
+    }
+
+    public patchRow(url:string, data:{}): Observable < any > {
+        const httpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.authToken}`,
+        });
+        return this.http.patch<JsonResponseModel> (baseUrl + url, JSON.stringify(data), {
+            headers: httpHeaders,
+        }).pipe(
+            map((response: JsonResponseModel) => {
+                return response.data;
+              })
+        );
+    }
+
+    public deleteRow(url:string): Observable < any > {
+        const httpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.authToken}`,
+        });
+        return this.http.delete<JsonResponseModel> (baseUrl + url, {
+            headers: httpHeaders,
+        }).pipe(
+            map((response: JsonResponseModel) => {
+                return response.data;
               })
         );
     }

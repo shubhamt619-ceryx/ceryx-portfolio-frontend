@@ -1,11 +1,13 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationService } from 'primeng-lts/api';
 import { Table } from 'primeng-lts/table';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { DeleteUserModalComponent } from './components/delete-user-modal/delete-user-modal.component';
 import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
+import { FetchUserModalComponent } from './components/fetch-user-modal/fetch-user-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -49,47 +51,28 @@ export class UsersComponent implements
     this.subscriptions.push(usersSub);  
   }
 
-  openNew() {
+  createUser() {
     let newUser = new UserModel();
     newUser.clearUser();//Clear
-    this.submitted = false;
-    this.productDialog = true;
-  }
-
-  deleteSelectedUser() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-       accept: () => {
-    this.users = this.users.filter(val => val._id !== this.user._id);
-    this.user.clearUser();
-    this.messageService.add({severity:'success', summary: 'Successful', detail: 'user Deleted', life: 3000});
-}
-    });
+    //this.submitted = false;
+    this.editUser(newUser);
   }
 
   editUser(user:UserModel) {
-    this.user.setUser(user);
-    // this.productDialog = true;
-    const modalRef = this.modalService.open(EditUserModalComponent);
-    modalRef.componentInstance.id = 0;
+    this.user = user;
+    const modalRef = this.modalService.open(EditUserModalComponent, { size: 'xl' });
+    modalRef.componentInstance.user = user;
     modalRef.result.then(() =>
       this.loadUsers()
     );
   }
-  deleteuser(user: UserModel) {
+
+  deleteUser(user: UserModel) {
     const modalRef = this.modalService.open(DeleteUserModalComponent);
-    modalRef.componentInstance.id = 0;
-    modalRef.result.then(() => this.commonService.fetch(), () => { });
+    modalRef.componentInstance._id = user._id;
+    modalRef.result.then(() => this.loadUsers());
   }
-
-  // hideDialog() {
-  //   this.productDialog = false;
-  //   this.submitted = false;
-  // }
-
-  saveProduct() {
+  saveUser() {
     this.submitted = true;
 
     if (this.user.name.trim()) {
@@ -135,21 +118,10 @@ export class UsersComponent implements
 
   clear(table: Table) {
     table.clear();
-  }newusers
-  createNewUser(){
-      console.log("New user Clicked")
   }
-  viewUser(){
-      console.log("viewUser Clicked")
+  viewUser(user: UserModel){
+    const modalRef = this.modalService.open(FetchUserModalComponent);
+    modalRef.componentInstance.email = user.email;
+    modalRef.result.then(() => { this.loadUsers() });
   }
-  editUserInfo(){
-    let newUser = new UserModel()
-    newUser.clearUser();
-    this.editUser(newUser);
-  }
-  deleteUserButton(){
-    let newUser = new UserModel()
-    newUser.clearUser();
-    this.deleteuser(newUser);
-}
   }

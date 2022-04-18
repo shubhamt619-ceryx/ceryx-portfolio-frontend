@@ -1,9 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { of, Subscription } from 'rxjs';
 import { catchError, finalize, first, tap } from 'rxjs/operators';
+import { JsonResponseModel } from 'src/app/_ceryx/models/json-response.model';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
+import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { CustomAdapter, CustomDateParserFormatter, getDateFromString } from '../../../../../_metronic/core';
 import { UsersService } from '../../services/users.service';
 
@@ -20,36 +22,37 @@ const EMPTY_USER: UserModel = new UserModel();
     {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}
   ]
 })
-export class EditUserModalComponent implements OnInit, OnDestroy {
-  @Input() _id: number;
+export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit {
+  @Input() user: UserModel;
   isLoading$;
-  user: UserModel;
   formGroup: FormGroup;
   private subscriptions: Subscription[] = [];
   constructor(
-    private usersService: UsersService,
+    private commonService: CommonService,
     private fb: FormBuilder, public modal: NgbActiveModal
     ) { }
 
-  ngOnInit(): void {
-    this.isLoading$ = this.usersService.isLoading$;
-    this.loadUser();
+    ngOnInit(): void {
+      this.loadUser();
+    }
+
+  ngAfterViewInit(): void {
   }
 
   loadUser() {
-    if (!this._id) {
-      this.user = EMPTY_USER;
+    this.isLoading$ = true;
+    if (this.user._id == '') {
+      this.user = new UserModel();
+      this.user.clearUser();
+      this.isLoading$ = false;
       this.loadForm();
     } else {
-      const sb = this.usersService.getItemById(this._id).pipe(
-        first(),
-        catchError((errorMessage) => {
-          this.modal.dismiss(errorMessage);
-          return of(EMPTY_USER);
-        })
-      ).subscribe((user:UserModel ) => {
+      let dataToPost = { email: this.user.email };
+      const sb = this.commonService.fetchRow("user/userdetails", dataToPost).subscribe((user:UserModel ) => {
         this.user = user;
+        console.log(this.user, 'this.user');
         this.loadForm();
+        this.isLoading$ = false;
       });
       this.subscriptions.push(sb);
     }
@@ -59,7 +62,6 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
     this.formGroup = this.fb.group({
       name: [this.user.name, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
       password: [this.user.password, Validators.compose([Validators.required])],
-      username: [this.user.username, Validators.compose([Validators.required])],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
       mobileNumber: [this.user.mobileNumber, Validators.compose([Validators.required])],
       role: ["0", Validators.compose([Validators.required])],
@@ -68,7 +70,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
 
   save() {
     this.prepareUser();
-    if (this.user._id) {
+    if (this.user._id != '') {
       this.edit();
     } else {
       this.create();
@@ -76,6 +78,11 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
   }
 
   edit() {
+    const sb = this.commonService.patchRow("user/profile", this.user).subscribe((res: JsonResponseModel ) => {
+      this.user = res.data;
+      this.modal.close();
+    });
+    this.subscriptions.push(sb);
     // const sbUpdate = this.usersService.update(this.user).pipe(
     //   tap(() => {
     //     this.modal.close();
@@ -89,25 +96,20 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    // const sbCreate = this.usersService.create(this.user).pipe(
-    //   tap(() => {
-    //     this.modal.close();
-    //   }),
-    //   catchError((errorMessage) => {
-    //     this.modal.dismiss(errorMessage);
-    //     return of(this.user);
-    //   }),
-    // ).subscribe((res: UserModel) => this.user = res);
-    // this.subscriptions.push(sbCreate);
+    const sb = this.commonService.fetchRow("user/register", this.user).subscribe((res: JsonResponseModel ) => {
+      this.user = res.data;
+      this.modal.close();
+    });
+    this.subscriptions.push(sb);
   }
 
   private prepareUser() {
     const formData = this.formGroup.value;
+    this.user.createdBy = "624ae77e2001216640db5fb9"
     this.user.email = formData.email;
     this.user.name = formData.name;
     this.user.role = formData.role;
     this.user.mobileNumber = formData.mobileNumber;
-    this.user.username = formData.username;
     this.user.password = formData.password;
   }
 
