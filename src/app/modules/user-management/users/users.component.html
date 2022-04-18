@@ -9,7 +9,7 @@
   </div>
   <div class="card-body">
     <!-- begin:Table -->
-    <p-table #dt1 [value]="users" styleClass="p-datatable-responsive-demo" dataKey="id"
+    <p-table #dt1 [value]="users" dataKey="id"
     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [globalFilterFields]="['name','email']">
