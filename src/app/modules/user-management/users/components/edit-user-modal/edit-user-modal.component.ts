@@ -63,7 +63,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
       name: [this.user.name, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
       password: [this.user.password, Validators.compose([Validators.required])],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      mobileNumber: [this.user.mobileNumber, Validators.compose([Validators.required])],
+      mobileNumber: [this.user.mobileNumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
       role: ["0", Validators.compose([Validators.required])],
     });
   }

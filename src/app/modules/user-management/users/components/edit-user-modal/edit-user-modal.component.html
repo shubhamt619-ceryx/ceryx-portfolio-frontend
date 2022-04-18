@@ -82,10 +82,10 @@
           <div class="invalid-feedback" *ngIf="controlHasError('required', 'mobileNumber')">
             Mobile Number is required
           </div>
-          <div class="invalid-feedback" *ngIf="controlHasError('minlength(10)', 'mobileNumber')">
+          <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'mobileNumber')">
             Mobile Number should have at least 3 symbols
           </div>
-          <div class="invalid-feedback" *ngIf="controlHasError('maxlength(10)', 'mobileNumber')">
+          <div class="invalid-feedback" *ngIf="controlHasError('maxlength', 'mobileNumber')">
             Mobile Number should have maximum 100 symbols
           </div>
         </div>
