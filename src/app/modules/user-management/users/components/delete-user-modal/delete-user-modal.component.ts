@@ -19,7 +19,7 @@ export class DeleteUserModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-  deleteCustomer() {
+  deleteUser() {
     this.isLoading = true;
     const sb = this.usersService.delete(this.id).pipe(
       delay(1000), // Remove it from your code (just for showing loading)

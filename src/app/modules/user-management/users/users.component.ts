@@ -4,6 +4,7 @@ import { Table } from 'primeng-lts/table';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
+import { DeleteUserModalComponent } from './components/delete-user-modal/delete-user-modal.component';
 import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
 
 @Component({
@@ -55,7 +56,7 @@ export class UsersComponent implements
     this.productDialog = true;
   }
 
-  deleteSelectedProducts() {
+  deleteSelectedUser() {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected products?',
       header: 'Confirm',
@@ -71,24 +72,16 @@ export class UsersComponent implements
   editUser(user:UserModel) {
     this.user.setUser(user);
     // this.productDialog = true;
-    const modalRef = this.modalService.open(EditUserModalComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(EditUserModalComponent);
     modalRef.componentInstance.id = 0;
     modalRef.result.then(() =>
       this.loadUsers()
     );
   }
-
-  deleteProduct(user: UserModel) {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + user.name + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.users = this.users.filter(val => val._id !== user._id);
-        this.user.clearUser();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'user Deleted', life: 3000 });
-      }
-    });
+  deleteuser(user: UserModel) {
+    const modalRef = this.modalService.open(DeleteUserModalComponent);
+    modalRef.componentInstance.id = 0;
+    modalRef.result.then(() => this.commonService.fetch(), () => { });
   }
 
   // hideDialog() {
@@ -142,7 +135,7 @@ export class UsersComponent implements
 
   clear(table: Table) {
     table.clear();
-  }
+  }newusers
   createNewUser(){
       console.log("New user Clicked")
   }
@@ -154,8 +147,9 @@ export class UsersComponent implements
     newUser.clearUser();
     this.editUser(newUser);
   }
-  deleteUser(){
-      console.log("deleteUser Clicked")
-  }
+  deleteUserButton(){
+    let newUser = new UserModel()
+    newUser.clearUser();
+    this.deleteuser(newUser);
 }
-
+  }

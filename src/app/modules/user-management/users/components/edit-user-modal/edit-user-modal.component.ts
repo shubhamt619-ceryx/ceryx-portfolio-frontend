@@ -57,15 +57,18 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      name: [this.user.firstName, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
+      name: [this.user.name, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
+      password: [this.user.password, Validators.compose([Validators.required])],
+      username: [this.user.username, Validators.compose([Validators.required])],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      userName: [this.user.userName, Validators.compose([Validators.required])],
+      mobileNumber: [this.user.mobileNumber, Validators.compose([Validators.required])],
+      role: ["0", Validators.compose([Validators.required])],
     });
   }
 
   save() {
     this.prepareUser();
-    if (this.user.id) {
+    if (this.user._id) {
       this.edit();
     } else {
       this.create();
@@ -73,41 +76,39 @@ export class EditUserModalComponent implements OnInit, OnDestroy {
   }
 
   edit() {
-    const sbUpdate = this.usersService.update(this.user).pipe(
-      tap(() => {
-        this.modal.close();
-      }),
-      catchError((errorMessage) => {
-        this.modal.dismiss(errorMessage);
-        return of(this.user);
-      }),
-    ).subscribe(res => this.user = res);
-    this.subscriptions.push(sbUpdate);
+    // const sbUpdate = this.usersService.update(this.user).pipe(
+    //   tap(() => {
+    //     this.modal.close();
+    //   }),
+    //   catchError((errorMessage) => {
+    //     this.modal.dismiss(errorMessage);
+    //     return of(this.user);
+    //   }),
+    // ).subscribe(res => this.user = res);
+    // this.subscriptions.push(sbUpdate);
   }
 
   create() {
-    const sbCreate = this.usersService.create(this.user).pipe(
-      tap(() => {
-        this.modal.close();
-      }),
-      catchError((errorMessage) => {
-        this.modal.dismiss(errorMessage);
-        return of(this.user);
-      }),
-    ).subscribe((res: User) => this.user = res);
-    this.subscriptions.push(sbCreate);
+    // const sbCreate = this.usersService.create(this.user).pipe(
+    //   tap(() => {
+    //     this.modal.close();
+    //   }),
+    //   catchError((errorMessage) => {
+    //     this.modal.dismiss(errorMessage);
+    //     return of(this.user);
+    //   }),
+    // ).subscribe((res: UserModel) => this.user = res);
+    // this.subscriptions.push(sbCreate);
   }
 
   private prepareUser() {
     const formData = this.formGroup.value;
-    this.user.dob = new Date(formData.dob);
     this.user.email = formData.email;
-    this.user.firstName = formData.firstName;
-    this.user.dateOfBbirth = formData.dob;
-    this.user.ipAddress = formData.ipAddress;
-    this.user.lastName = formData.lastName;
-    this.user.type = +formData.type;
-    this.user.userName = formData.userName;
+    this.user.name = formData.name;
+    this.user.role = formData.role;
+    this.user.mobileNumber = formData.mobileNumber;
+    this.user.username = formData.username;
+    this.user.password = formData.password;
   }
 
   ngOnDestroy(): void {

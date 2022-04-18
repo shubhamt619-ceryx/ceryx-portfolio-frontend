@@ -40,6 +40,9 @@ const httpOptions = {
 })
 
 export class CommonService {
+    fetch(): any {
+      throw new Error('Method not implemented.');
+    }
 
     // private fields
     private subscriptions: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/

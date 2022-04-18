@@ -17,6 +17,9 @@ export class UserModel extends AuthModel {
     this.name = user.name || '';
     this._id = user._id || '';
     this.mobileNumber = user.mobileNumber || 0;
+    this.username = user.username || "";
+    this.password = user.password|| "";
+
   }
   clearUser() {
     this.role = '';
@@ -24,6 +27,7 @@ export class UserModel extends AuthModel {
     this.name = '';
     this._id = '';
     this.mobileNumber ;
-
+    this.username = "";
+   this.password = "";
   }
 }
