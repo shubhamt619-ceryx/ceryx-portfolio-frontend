@@ -13,9 +13,11 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { UpdateUserStatusModalComponent } from './users/components/update-user-status-modal/update-user-status-modal.component';
 import { TableModule } from 'primeng-lts/table';
 import { ButtonModule } from 'primeng-lts/button';
+import { MessagesModule } from 'primeng-lts/messages';
+import { MessageModule } from 'primeng-lts/message';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { FetchUserModalComponent } from './users/components/fetch-user-modal/fetch-user-modal.component';
-import { ConfirmationService, MessageService } from 'primeng-lts/api';
+import { MessageService } from 'primeng-lts/api';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { ConfirmationService, MessageService } from 'primeng-lts/api';
     TableModule,
     ButtonModule,
     InputTextModule,
+    MessagesModule,
+    MessageModule,
   ],
   entryComponents: [
     UsersComponent,
@@ -47,6 +51,9 @@ import { ConfirmationService, MessageService } from 'primeng-lts/api';
     EditUserModalComponent,
     UpdateUserStatusModalComponent,
     FetchUserModalComponent,
+  ],
+  providers: [
+    MessageService,
   ]
 })
 export class UserManagementModule {}

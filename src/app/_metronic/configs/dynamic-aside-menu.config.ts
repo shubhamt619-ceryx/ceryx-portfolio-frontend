@@ -27,6 +27,25 @@ export const DynamicAsideMenuConfig = {
         //   page: '/user-management/roles'
         // }
       ]
+    },
+    { section: 'Sample Management' },
+    {
+      title: 'Sample Management',
+      root: true,
+      bullet: 'dot',
+      icon: 'flaticon2-user-outline-symbol',
+      svg: './assets/media/svg/icons/General/User.svg',
+      page: '/user-management',
+      submenu: [
+        {
+          title: 'Samples',
+          page: '/Sample-management/users'
+        },
+        // {
+        //   title: 'Roles',
+        //   page: '/user-management/roles'
+        // }
+      ]
     },   
   ]
 };

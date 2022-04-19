@@ -25,7 +25,7 @@ export class DeleteUserModalComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     let loadSub = this.commonService.deleteRow('user/delete-user/' + this._id).subscribe(res => {
       this.isLoading = false;
-      this.modal.close()
+      this.modal.close(true)
     });
     this.subscriptions.push(loadSub);
   }

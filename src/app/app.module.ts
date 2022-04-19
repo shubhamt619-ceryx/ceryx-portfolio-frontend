@@ -10,6 +10,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 //import { AuthService } from './modules/auth/_services/auth.service';
 import { environment } from 'src/environments/environment';
 // Highlight JS
@@ -20,6 +21,7 @@ import { FakeAPIService } from './_fake/fake-api.service';
 import { AuthService } from './_ceryx/services/auth.service';
 import {ButtonModule} from 'primeng-lts/button';
 import {TableModule} from 'primeng-lts/table';
+import {ToastModule} from 'primeng-lts/toast';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -57,6 +59,8 @@ function appInitializer(authService: AuthService) {
     //PrimeNg
     TableModule,
     ButtonModule,
+    ToastModule,
+
   ],
   providers: [
     {

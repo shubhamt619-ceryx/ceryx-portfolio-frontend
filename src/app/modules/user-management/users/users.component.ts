@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmationService } from 'primeng-lts/api';
+import { ConfirmationService, MessageService } from 'primeng-lts/api';
 import { Table } from 'primeng-lts/table';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
@@ -12,7 +12,8 @@ import { FetchUserModalComponent } from './components/fetch-user-modal/fetch-use
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  providers: [MessageService],
 })
 export class UsersComponent implements
   OnInit,
@@ -29,13 +30,13 @@ export class UsersComponent implements
   loading: boolean = true;
   submitted: boolean;
   confirmationService: any;
-  messageService: any;
   product: any;
   products: any;
   constructor(
     private commonService: CommonService,
     private modalService: NgbModal,
     private cd: ChangeDetectorRef,
+    private messageService: MessageService,
     ) { }
 
   ngOnInit(): void {
@@ -52,9 +53,9 @@ export class UsersComponent implements
   }
 
   createUser() {
+    //this.messageService.add({key: 'tc', severity:'success', summary:'Service Message', detail:'Via MessageService'});
     let newUser = new UserModel();
     newUser.clearUser();//Clear
-    //this.submitted = false;
     this.editUser(newUser);
   }
 
@@ -62,15 +63,18 @@ export class UsersComponent implements
     this.user = user;
     const modalRef = this.modalService.open(EditUserModalComponent, { size: 'xl' });
     modalRef.componentInstance.user = user;
-    modalRef.result.then(() =>
-      this.loadUsers()
-    );
+    modalRef.result.then((result) => { console.log(result, 'result'); }, () => { this.loadUsers() }).catch(err => {});
   }
 
   deleteUser(user: UserModel) {
     const modalRef = this.modalService.open(DeleteUserModalComponent);
     modalRef.componentInstance._id = user._id;
-    modalRef.result.then(() => this.loadUsers());
+    modalRef.result.then((result) => {
+
+      this.loadUsers()
+     }, () => {}).catch(err => { 
+      console.log(123);
+     });
   }
   saveUser() {
     this.submitted = true;
@@ -104,6 +108,8 @@ export class UsersComponent implements
     return index;
   }
 
+  
+
   createId(): string {
     let id = '';
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -122,6 +128,6 @@ export class UsersComponent implements
   viewUser(user: UserModel){
     const modalRef = this.modalService.open(FetchUserModalComponent);
     modalRef.componentInstance.email = user.email;
-    modalRef.result.then(() => { this.loadUsers() });
+    modalRef.result.then((result) => { console.log(result, 'result'); }, () => {}).catch(err => {});
   }
   }

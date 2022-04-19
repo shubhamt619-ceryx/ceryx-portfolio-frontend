@@ -9,7 +9,7 @@
   </ng-container>
 
   <!--begin::User-->
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center" *ngIf="!isLoading">
     <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
       <div class="symbol-label" [style.backgroundImage]="'url('+ user.profile_pic +')'"></div>
     </div>
@@ -23,20 +23,20 @@
     </div>
   </div>
   <!--end::User-->
-  <!--begin::Contact-->
-  <div class="py-9">
+  <!--begin::email-->
+  <div class="py-9"  *ngIf="!isLoading">
     <div class="d-flex align-items-center justify-content-between mb-2">
       <span class="font-weight-bold mr-2">Email:</span>
       <a class="text-muted text-hover-primary">{{user.email}}</a>
     </div>
   </div>
-  <!--end::Contact-->
+  <!--end::email-->
 
 </div>
 
 <div class="modal-footer">
   <div>
-    <button type="button" class="btn btn-light btn-elevate mr-3" (click)="modal.dismiss()">Back</button>
+    <button type="button" class="btn btn-light btn-elevate mr-3" (click)="close()">Back</button>
     <!-- <button type="button" class="btn btn-primary btn-elevate" (click)="modal.dismiss()">Back</button> -->
   </div>
 </div>

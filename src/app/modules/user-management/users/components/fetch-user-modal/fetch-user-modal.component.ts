@@ -38,4 +38,8 @@ export class FetchUserModalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());
   }
+
+  close(){
+    this.modal.dismiss('');
+  }
 }

@@ -7,8 +7,7 @@ import { JsonResponseModel } from 'src/app/_ceryx/models/json-response.model';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { CustomAdapter, CustomDateParserFormatter, getDateFromString } from '../../../../../_metronic/core';
-import { UsersService } from '../../services/users.service';
-
+import { MessageService } from 'primeng-lts/api';
 const EMPTY_USER: UserModel = new UserModel();
 
 @Component({
@@ -18,8 +17,9 @@ const EMPTY_USER: UserModel = new UserModel();
   // NOTE: For this example we are only providing current component, but probably
   // NOTE: you will w  ant to provide your main App Module
   providers: [
-    {provide: NgbDateAdapter, useClass: CustomAdapter},
-    {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
+    { provide: MessageService }
   ]
 })
 export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -27,14 +27,18 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
   isLoading$;
   formGroup: FormGroup;
   private subscriptions: Subscription[] = [];
+
   constructor(
     private commonService: CommonService,
+    private messageService: MessageService,
     private fb: FormBuilder, public modal: NgbActiveModal
-    ) { }
+  ) { }
 
-    ngOnInit(): void {
-      this.loadUser();
-    }
+  ngOnInit(): void {
+    this.loadUser();
+    this.messageService.clear()
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Message Content'});
+  }
 
   ngAfterViewInit(): void {
   }
@@ -48,11 +52,12 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
       this.loadForm();
     } else {
       let dataToPost = { email: this.user.email };
-      const sb = this.commonService.fetchRow("user/userdetails", dataToPost).subscribe((user:UserModel ) => {
+      const sb = this.commonService.fetchRow("user/userdetails", dataToPost).subscribe((user: UserModel) => {
         this.user = user;
         console.log(this.user, 'this.user');
         this.loadForm();
         this.isLoading$ = false;
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Message Content'});
       });
       this.subscriptions.push(sb);
     }
@@ -75,10 +80,15 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
     } else {
       this.create();
     }
+    
+  }
+
+  close(){
+    this.modal.close()
   }
 
   edit() {
-    const sb = this.commonService.patchRow("user/profile", this.user).subscribe((res: JsonResponseModel ) => {
+    const sb = this.commonService.patchRow("user/profile", this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
       this.modal.close();
     });
@@ -94,9 +104,9 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
     // ).subscribe(res => this.user = res);
     // this.subscriptions.push(sbUpdate);
   }
-
+ 
   create() {
-    const sb = this.commonService.fetchRow("user/register", this.user).subscribe((res: JsonResponseModel ) => {
+    const sb = this.commonService.fetchRow("user/register", this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
       this.modal.close();
     });
@@ -137,4 +147,5 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
     const control = this.formGroup.controls[controlName];
     return control.dirty || control.touched;
   }
+
 }
