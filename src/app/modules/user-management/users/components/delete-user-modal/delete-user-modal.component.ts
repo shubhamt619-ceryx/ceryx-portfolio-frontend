@@ -15,6 +15,7 @@ export class DeleteUserModalComponent implements OnInit, OnDestroy {
   @Input() _id: string;
   isLoading = false;
   subscriptions: Subscription[] = [];
+  messageService: any;
 
   constructor(private commonService: CommonService, public modal: NgbActiveModal) { }
 
@@ -25,8 +26,9 @@ export class DeleteUserModalComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     let loadSub = this.commonService.deleteRow('user/delete-user/' + this._id).subscribe(res => {
       this.isLoading = false;
+      // User delete success
       this.modal.close(true)
-    });
+    }); 
     this.subscriptions.push(loadSub);
   }
 

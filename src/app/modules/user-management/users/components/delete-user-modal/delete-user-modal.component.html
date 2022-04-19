@@ -11,6 +11,7 @@
 <div class="modal-body">
   <ng-container *ngIf="isLoading">
     <span>Deleting user...</span>
+    <p-messages></p-messages>
   </ng-container>
 
   <ng-container *ngIf="!isLoading">

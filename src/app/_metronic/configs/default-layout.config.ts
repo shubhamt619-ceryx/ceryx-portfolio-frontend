@@ -102,7 +102,7 @@ export const DefaultLayoutConfig = {
 
       mobile: {
         submenu: {
-          theme: 'dark',
+          theme: 'light',
           accordion: true,
         },
       },
@@ -129,14 +129,14 @@ export const DefaultLayoutConfig = {
   // Brand
   brand: {
     self: {
-      theme: 'dark', // light/dark
+      theme: 'light', // light/dark
     },
   },
 
   // Aside
   aside: {
     self: {
-      theme: 'dark', // light/dark
+      theme: 'light', // light/dark
       display: true,
       fixed: true,
       minimize: {

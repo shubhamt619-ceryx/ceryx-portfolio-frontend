@@ -41,7 +41,7 @@
             <label class="form-label">Email</label>
             <input type="text" class="form-control form-control-lg form-control-solid" name="email"
               placeholder="Enter your email" autocomplete="off" [class.is-invalid]="isControlInvalid('email')"
-              [class.is-valid]="isControlValid('email')" formControlName="email" />
+              [class.is-valid]="isControlValid('email')" formControlName="email" disabled/>
             <div class="valid-feedback" *ngIf="isControlValid('email')">
               Name was entered correct
             </div>
@@ -105,7 +105,7 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()" label="Warn">
+  <button type="button" class="btn btn-light btn-elevate mr-2" (click)="modal.dismiss()">
     Cancel
   </button>
   <ng-container *ngIf="formGroup">

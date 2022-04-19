@@ -18,6 +18,8 @@ import {TaxInformationComponent} from './tax-information/tax-information.compone
 import {StatementsComponent} from './statements/statements.component';
 import {UserProfileRoutingModule} from './user-profile-routing.module';
 import {ProfileCardComponent} from './_components/profile-card/profile-card.component';
+import { MessageModule } from 'primeng-lts/message';
+import { MessagesModule } from 'primeng-lts/messages';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import {ProfileCardComponent} from './_components/profile-card/profile-card.comp
     DropdownMenusModule,
     NgbDropdownModule,
     NgbTooltipModule,
-    WidgetsModule
+    WidgetsModule,
+    MessagesModule,
+    MessageModule,
   ]
 })
 export class UserProfileModule {}

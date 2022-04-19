@@ -1,14 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng-lts/api';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { JsonResponseModel } from 'src/app/_ceryx/models/json-response.model';
 import { UserModel } from 'src/app/_ceryx/models/user.model';
 import { AuthService } from 'src/app/_ceryx/services/auth.service';
+import { CommonService } from 'src/app/_ceryx/services/common.service';
 
 @Component({
   selector: 'app-personal-information',
   templateUrl: './personal-information.component.html',
-  styleUrls: ['./personal-information.component.scss']
+  styleUrls: ['./personal-information.component.scss'],
+  providers: [MessageService],
 })
 export class PersonalInformationComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
@@ -16,13 +21,19 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   firstUserState: UserModel;
   subscriptions: Subscription[] = [];
   avatarPic = 'none';
-  isLoading$: Observable<boolean>;
+  isLoading: boolean;
 
-  constructor(private userService: AuthService, private fb: FormBuilder) {
-    this.isLoading$ = this.userService.isLoadingSubject.asObservable();
+  constructor(private userService: AuthService, private fb: FormBuilder,
+    private commonService: CommonService,private messageService: MessageService,
+    private router: Router,
+    ) {
   }
 
   ngOnInit(): void {
+    this.loadCurrentUserInfo()
+  }
+
+  loadCurrentUserInfo() {
     const sb = this.userService.currentUserSubject.asObservable().pipe(
       first(user => !!user)
     ).subscribe(user => {
@@ -37,12 +48,20 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sb => sb.unsubscribe());
   }
 
+  prepareUser() {
+    const formData = this.formGroup.value;
+    //this.user.email = formData.email;
+    this.user.name = formData.name;
+    this.user.mobileNumber = formData.mobileNumber;
+    this.user.profile_pic = formData.profile_pic;
+  }
+
   loadForm() {
     this.formGroup = this.fb.group({
       profile_pic: [this.user.profile_pic],
       name: [this.user.name, Validators.required],
-      Mobile_Number: [this.user.mobileNumber, Validators.required],
-      email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
+      mobileNumber: [this.user.mobileNumber, Validators.required],
+      email: [{value:this.user.email, disabled: true}, Validators.compose([Validators.required, Validators.email])],
     });
   }
 
@@ -57,10 +76,19 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
     // Do request to your server for user update, we just imitate user update there
     this.userService.isLoadingSubject.next(true);
-    setTimeout(() => {
-      this.userService.currentUserSubject.next(Object.assign({}, this.user));
-      this.userService.isLoadingSubject.next(false);
-    }, 2000);
+    const sb = this.commonService.patchRow("user/profile", this.user).subscribe((res: JsonResponseModel) => {
+      
+      let uSub = this.userService.getUserByToken().subscribe(user => {
+        this.user = user;
+        //this.router.navigate(['user-profile/']);
+        location.reload()
+      })
+      this.subscriptions.push(uSub);  
+      //user updated successfully
+      this.messageService.clear()
+      this.messageService.add({severity:'success', summary:'Success', detail:'User updated successfully'});
+    });
+    this.subscriptions.push(sb);
   }
 
   cancel() {

@@ -114,8 +114,6 @@ export class AuthService {
     this.isLoadingSubject.next(true);
     return this.getUserByTokenHttp(auth.authToken).pipe(
       map((user: any) => {
-        console.log(user , 'sersssssssssss');
-        
         if (user) {
           this.currentUserSubject = new BehaviorSubject<UserModel>(user.data);
         } else {

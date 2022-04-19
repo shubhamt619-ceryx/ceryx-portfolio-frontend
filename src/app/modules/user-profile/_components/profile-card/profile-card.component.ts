@@ -11,8 +11,19 @@ import { AuthService } from 'src/app/_ceryx/services/auth.service';
 })
 export class ProfileCardComponent {
   user$: Observable<UserModel>;
+  files: File[] = [];
   constructor(public userService: AuthService) {
     this.user$ = this.userService.currentUserSubject.asObservable();
     //console.log(this.user$, 'user$');
+  }
+
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+  }
+  
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
   }
 }

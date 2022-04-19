@@ -60,7 +60,6 @@ function appInitializer(authService: AuthService) {
     TableModule,
     ButtonModule,
     ToastModule,
-
   ],
   providers: [
     {

@@ -24,6 +24,7 @@ const EMPTY_USER: UserModel = new UserModel();
 })
 export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() user: UserModel;
+  
   isLoading$;
   formGroup: FormGroup;
   private subscriptions: Subscription[] = [];
@@ -36,12 +37,12 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnInit(): void {
     this.loadUser();
-    this.messageService.clear()
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Message Content'});
   }
 
   ngAfterViewInit(): void {
   }
+
+  
 
   loadUser() {
     this.isLoading$ = true;
@@ -57,7 +58,6 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
         console.log(this.user, 'this.user');
         this.loadForm();
         this.isLoading$ = false;
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Message Content'});
       });
       this.subscriptions.push(sb);
     }
@@ -79,6 +79,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
       this.edit();
     } else {
       this.create();
+      
     }
     
   }
@@ -90,24 +91,15 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
   edit() {
     const sb = this.commonService.patchRow("user/profile", this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
-      this.modal.close();
+      // User updated success
     });
     this.subscriptions.push(sb);
-    // const sbUpdate = this.usersService.update(this.user).pipe(
-    //   tap(() => {
-    //     this.modal.close();
-    //   }),
-    //   catchError((errorMessage) => {
-    //     this.modal.dismiss(errorMessage);
-    //     return of(this.user);
-    //   }),
-    // ).subscribe(res => this.user = res);
-    // this.subscriptions.push(sbUpdate);
   }
  
   create() {
     const sb = this.commonService.fetchRow("user/register", this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
+      // User created success
       this.modal.close();
     });
     this.subscriptions.push(sb);
@@ -147,5 +139,4 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
     const control = this.formGroup.controls[controlName];
     return control.dirty || control.touched;
   }
-
 }

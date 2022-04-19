@@ -1,7 +1,7 @@
 <ng-container *ngIf="user">
   <div class="card card-custom card-stretch" [formGroup]="formGroup">
     <!-- begin::Loading -->
-    <ng-container *ngIf="isLoading$ | async">
+    <ng-container *ngIf="isLoading">
       <div class="progress progress-modal">
         <div
           class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
@@ -53,7 +53,7 @@
               >
                 <i class="fa fa-pen icon-sm text-muted"></i>
                 <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg"  />
-                <input type="hidden" name="profile_avatar_remove" formControlName="pic" />
+                <input type="hidden" name="profile_avatar_remove" formControlName="profile_pic" />
               </label>
               <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                 data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
@@ -98,9 +98,9 @@
               <input type="text"
                 class="form-control form-control-lg form-control-solid" 
                 placeholder="Mobile Number"
-                formControlName="Mobile_Number"
-                [class.is-invalid]="isControlInvalid('Mobile_Number')"
-                [class.is-valid]="isControlValid('Mobile_Number')"
+                formControlName="mobileNumber"
+                [class.is-invalid]="isControlInvalid('mobileNumber')"
+                [class.is-valid]="isControlValid('mobileNumber')"
               />
             </div>
           </div>
@@ -129,5 +129,6 @@
       <!--end::Body-->
     </div>
     <!--end::Form-->
+    <p-messages></p-messages>
   </div>
 </ng-container>

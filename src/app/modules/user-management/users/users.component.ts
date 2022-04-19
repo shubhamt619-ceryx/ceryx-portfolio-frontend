@@ -53,7 +53,6 @@ export class UsersComponent implements
   }
 
   createUser() {
-    //this.messageService.add({key: 'tc', severity:'success', summary:'Service Message', detail:'Via MessageService'});
     let newUser = new UserModel();
     newUser.clearUser();//Clear
     this.editUser(newUser);
@@ -82,12 +81,14 @@ export class UsersComponent implements
     if (this.user.name.trim()) {
       if (this.user._id) {
         this.users[this.findIndexById(this.user._id)] = this.user
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'user Updated', life: 3000 });
+        this.messageService.clear()
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User updated', life: 3000 });
       }
       else {
         this.user._id = this.createId();
         this.users.push(this.user);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'user Created', life: 3000 });
+        this.messageService.clear()
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User created successfully', life: 3000 });
       }
 
       this.users = [...this.products];
