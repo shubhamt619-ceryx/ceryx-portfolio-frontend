@@ -32,6 +32,20 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'samples-management',
+        loadChildren: () =>
+          import('../modules/samples-management/samples-management.module').then(
+            (m) => m.SamplesManagementModule
+          ),
+      },
+      {
+        path: 'portfolio-management',
+        loadChildren: () =>
+          import('../modules/portfolio-management/portfolio-management.module').then(
+            (m) => m.PortfolioManagementModule
+          ),
+      },
+      {
         path: 'user-profile',
         loadChildren: () =>
           import('../modules/user-profile/user-profile.module').then(

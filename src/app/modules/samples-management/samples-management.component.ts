@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sample-management',
-  templateUrl: './sample-management.html',
+  selector: 'samples-management',
+  templateUrl: './samples-management.component.html',
 })
-export class SampleManagement implements OnInit {
+export class SamplesManagementComponent implements OnInit {
 
   constructor() { }
 

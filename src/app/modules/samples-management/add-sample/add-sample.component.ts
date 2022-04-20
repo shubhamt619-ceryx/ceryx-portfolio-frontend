@@ -1,12 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import KTWizard from '../../../../assets/js/components/wizard';
 import { KTUtil } from '../../../../assets/js/components/util';
+
+import { MessageService, TreeNode } from 'primeng-lts/api';
 @Component({
   selector: 'app-add-sample',
-  templateUrl: './wizard1.component.html',
-  styleUrls: ['./wizard1.component.scss']
+  templateUrl: './add-sample.component.html',
+  styleUrls: ['./add-sample.component.scss'],
+  providers: [MessageService],
 })
-export class AddSample implements OnInit, AfterViewInit, OnDestroy {
+export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('wizard', { static: true }) el: ElementRef;
   model: any = {
     address1: 'Address Line 1',
@@ -32,10 +35,71 @@ export class AddSample implements OnInit, AfterViewInit, OnDestroy {
   };
   submitted = false;
   wizard: any;
+  files: File[] = [];
 
-  constructor() { }
+  files1: TreeNode[] = [];
+
+  selectedFile: TreeNode;
+
+  selectedFiles1: TreeNode;
+
+  selectedFiles2: TreeNode;
+  nodeService: any;
+
+  constructor(
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
+    let filesData = [
+      {
+          "label": "Documents",
+          "data": "Documents Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children": [{
+                  "label": "Work",
+                  "data": "Work Folder",
+                  "expandedIcon": "pi pi-folder-open",
+                  "collapsedIcon": "pi pi-folder",
+                  "children": [{"label": "Expenses.doc", "icon": "pi pi-file", "data": "Expenses Document"}, {"label": "Resume.doc", "icon": "pi pi-file", "data": "Resume Document"}]
+              },
+              {
+                  "label": "Home",
+                  "data": "Home Folder",
+                  "expandedIcon": "pi pi-folder-open",
+                  "collapsedIcon": "pi pi-folder",
+                  "children": [{"label": "Invoices.txt", "icon": "pi pi-file", "data": "Invoices for this month"}]
+              }]
+      },
+      {
+          "label": "Pictures",
+          "data": "Pictures Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children": [
+              {"label": "barcelona.jpg", "icon": "pi pi-image", "data": "Barcelona Photo"},
+              {"label": "logo.jpg", "icon": "pi pi-image", "data": "PrimeFaces Logo"},
+              {"label": "primeui.png", "icon": "pi pi-image", "data": "PrimeUI Logo"}]
+      },
+      {
+          "label": "Movies",
+          "data": "Movies Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children": [{
+                  "label": "Al Pacino",
+                  "data": "Pacino Movies",
+                  "children": [{"label": "Scarface", "icon": "pi pi-video", "data": "Scarface Movie"}, {"label": "Serpico", "icon": "pi pi-video", "data": "Serpico Movie"}]
+              },
+              {
+                  "label": "Robert De Niro",
+                  "data": "De Niro Movies",
+                  "children": [{"label": "Goodfellas", "icon": "pi pi-video", "data": "Goodfellas Movie"}, {"label": "Untouchables", "icon": "pi pi-video", "data": "Untouchables Movie"}]
+              }]
+      }
+  ];
+    this.files1 = filesData;
+
   }
 
   ngAfterViewInit() {
@@ -67,5 +131,30 @@ export class AddSample implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.wizard = undefined;
+  }
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+  }
+
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  nodeSelect(event) {
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Node Selected',
+      detail: event.node.label,
+    });
+  }
+
+  nodeUnselect(event) {
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Node Unselected',
+      detail: event.node.label,
+    });
   }
 }

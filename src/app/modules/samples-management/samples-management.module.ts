@@ -1,19 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
-
-import {  SampleManagement } from './samples-management.component';
-import { SampleManagementModule } from './samples-management-routing.module';
+import {  SamplesManagementComponent } from './samples-management.component';
+import { SamplesManagementRoutingModule } from './samples-management-routing.module';
+import {AddSampleComponent} from './add-sample/add-sample.component'
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import {TreeModule} from 'primeng-lts/tree';
+import {ToastModule} from 'primeng-lts/toast';
+import {InputTextareaModule} from 'primeng-lts/inputtextarea';
 
 @NgModule({
-  declarations: [SampleManagement],
+  declarations: [
+    SamplesManagementComponent,
+    AddSampleComponent
+  ],
   imports: [
-    CommonModule,
+    CommonModule, 
     FormsModule,
+    ReactiveFormsModule,
     InlineSVGModule,
-    SampleManagementModule
-    ,
+    SamplesManagementRoutingModule,
+    NgxDropzoneModule,
+    TreeModule,
+    ToastModule,
+    InputTextareaModule
   ]
 })
-export class SampleModule { }
+export class SamplesManagementModule { }

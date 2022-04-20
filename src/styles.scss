@@ -103,3 +103,38 @@
   height: 3px;
   width: 100%;
 }
+.card.card-custom.card-tall {
+  display: flex;
+  align-items: stretch !important;
+  flex-direction: column;
+  height: 80vh;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #51515fb6;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #51515fb6; 
+}
+.card.card-custom.card-tall > .card-header {
+  min-height: auto;
+}
+.card.card-custom.card-tall > .card-body {
+  min-height: auto;
+  margin-top: 5px;
+  overflow-y: auto;
+}

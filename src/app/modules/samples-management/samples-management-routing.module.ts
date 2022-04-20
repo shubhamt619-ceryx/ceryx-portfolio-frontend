@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddSample } from './add-sample/add-sample.component';
-import { SampleManagement } from './samples-management.component';
+import { AddSampleComponent } from './add-sample/add-sample.component';
+import { SamplesManagementComponent } from './samples-management.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SampleManagement,
+    component: SamplesManagementComponent,
     children: [
       {
-        path: 'AddSample',
-        component: AddSample,
+        path: 'add-sample',
+        component: AddSampleComponent,
       },
-      { path: '', redirectTo: 'AddSample', pathMatch: 'full' },
-      { path: '**', redirectTo: 'AddSample', pathMatch: 'full' },
+      { path: '', redirectTo: 'add-sample', pathMatch: 'full' },
+      { path: '**', redirectTo: 'add-sample', pathMatch: 'full' },
     ],
   },
 ];
@@ -22,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SampleManagementModule { }
+export class SamplesManagementRoutingModule { }

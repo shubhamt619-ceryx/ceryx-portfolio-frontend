@@ -1,0 +1,33 @@
+<!--begin::Profile Overview-->
+<div class="d-flex flex-row">
+  <!--begin::Aside-->
+  <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px" id="kt_profile_aside">
+    <app-portfolio-categories
+    [categories]="categories"
+    (categoryClicked)="loadCategorySamples($event)"
+    ></app-portfolio-categories>
+  </div>
+  <!--end::Aside-->
+
+  <!--begin::Content-->
+  <div class="flex-row-fluid ml-lg-8">
+    <div class="card card-custom card-tall p-10">
+      <div class="card-header">
+        <div class="card-title">
+          <h3 class="card-label">Sample Items 
+            <span *ngIf="selectedSamples.length > 0">Total {{ selectedSamples.length }} samples selected.</span>
+          </h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <mat-grid-list cols="3" rowHeight="300" gutterSize="20">
+          <mat-grid-tile *ngFor="let sample of categorySamples">
+            <app-portfolio-category-card [sample]="sample" (sampleSelected)="addToSelectedSamples(sample)" (sampleDeselected)="removeSelectedSample(sample)"></app-portfolio-category-card>
+          </mat-grid-tile>
+          </mat-grid-list>
+      </div>
+    </div>
+  </div>
+  <!--end::Content-->
+</div>
+<!--end::Profile Overview-->

@@ -1,0 +1,33 @@
+<!--begin::Profile Card-->
+<div class="card card-custom card-tall">
+    <!--begin::Body-->
+    <div class="card-body p-10">
+        <h3>Sample Categories</h3>
+      <!--begin::Nav-->
+      <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
+        <!-- <div class="navi-item mb-2">
+          <a class="navi-link py-4" routerLink="/user-profile/profile-overview" routerLinkActive="active">
+            <span class="navi-icon mr-2">
+              <span [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'" cacheSVG="true" class="svg-icon"></span>
+            </span>
+            <span class="navi-text font-size-lg">
+              Profile Overview
+            </span>
+          </a>
+        </div> -->
+        <div class="navi-item mb-2" *ngFor="let category of categories" (click)="emitCategoryClicked(category)">
+          <a class="navi-link py-4" [ngClass]="{'active' : category.active }">
+            <span class="navi-icon mr-2">
+              <span [inlineSVG]="'./assets/media/svg/icons/General/Thunder.svg'" cacheSVG="true" class="svg-icon"></span>
+            </span> 
+            <span class="navi-text font-size-lg">
+              {{ category.name }}
+            </span>
+          </a>
+        </div>
+      </div>
+      <!--end::Nav-->
+    </div>
+    <!--end::Body-->
+  </div>
+  <!--end::Profile Card-->
