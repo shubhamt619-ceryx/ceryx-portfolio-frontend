@@ -3,6 +3,8 @@ import KTWizard from '../../../../assets/js/components/wizard';
 import { KTUtil } from '../../../../assets/js/components/util';
 
 import { MessageService, TreeNode } from 'primeng-lts/api';
+import { CommonService } from 'src/app/_ceryx/services/common.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-add-sample',
   templateUrl: './add-sample.component.html',
@@ -11,43 +13,18 @@ import { MessageService, TreeNode } from 'primeng-lts/api';
 })
 export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('wizard', { static: true }) el: ElementRef;
-  model: any = {
-    address1: 'Address Line 1',
-    address2: 'Address Line 2',
-    postcode: '3000',
-    city: 'Melbourne',
-    state: 'VIC',
-    country: 'AU',
-    package: 'Complete Workstation (Monitor, Computer, Keyboard & Mouse)',
-    weight: '25',
-    width: '110',
-    height: '90',
-    length: '150',
-    delivery: 'overnight',
-    packaging: 'regular',
-    preferreddelivery: 'morning',
-    locaddress1: 'Address Line 1',
-    locaddress2: 'Address Line 2',
-    locpostcode: '3072',
-    loccity: 'Preston',
-    locstate: 'VIC',
-    loccountry: 'AU',
-  };
   submitted = false;
   wizard: any;
   files: File[] = [];
-
   files1: TreeNode[] = [];
-
   selectedFile: TreeNode;
-
-  selectedFiles1: TreeNode;
-
-  selectedFiles2: TreeNode;
   nodeService: any;
+  subscriptions: Subscription[] = []
 
   constructor(
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private commonService: CommonService,
+    ) { }
 
   ngOnInit(): void {
     let filesData = [
@@ -123,6 +100,27 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
         KTUtil.scrollTop();
       }, 500);
     });
+  }
+
+  uploadSampleFile(){
+    // fileName
+    if(this.files.length == 1){
+      console.log(this.files);
+      let fileDetails = { 
+        "name": "0",
+        "link": "0",
+        "tags": [],
+        "category": "0",
+        "include_portfolio": ["0"],
+        "in_staff_portfolio": false,
+        "createdBy": "0",
+        "fileName": this.files[0].name,
+       };
+      let fileSub = this.commonService.fetchRow("sample/create", fileDetails).subscribe(res => {
+        console.log(res, 'file res');
+      });
+      this.subscriptions.push(fileSub);
+    }
   }
 
   onSubmit() {

@@ -49,12 +49,19 @@
               <div class="mb-10 font-weight-bold text-dark">
                 Upload the ZIP package of the Sample
               </div>
-              <ngx-dropzone (change)="onSelect($event)">
+              <ngx-dropzone (change)="onSelect($event)" accept="application/zip">
                 <ngx-dropzone-label>Drop the ZIP Package here</ngx-dropzone-label>
                 <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                  <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
                 </ngx-dropzone-preview>
               </ngx-dropzone>
+
+              <div style="right: 0;position: absolute;">
+                <br><br>
+                <button type="button" class="btn btn-primary" (click)="uploadSampleFile()">Upload File</button>
+              </div>
+              <br><br>
+              <br><br>
             </div>
             <!--end: Form Wizard Step 1-->
 
@@ -95,8 +102,7 @@
               <div class="form-group">
                 <label>Categories</label>
                 <select
-                  name="preferreddelivery"
-                  [(ngModel)]="model.preferreddelivery"
+                  name=""
                   class="form-control"
                 >
                   <option value="morning" selected>Select a Category</option>
