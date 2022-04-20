@@ -3,6 +3,9 @@
     <div class="card-title">
       <h3 class="card-label">Add Sample</h3>
     </div>
+    <div class="card-toolbar">
+      <button type="button" class="btn btn-primary" routerLink="/samples-management/all-samples">All Samples</button>
+    </div>
   </div>
   <div class="card-body">
     <!--begin: Wizard -->
@@ -19,13 +22,13 @@
           <a class="wizard-step" href="javascript:;" data-wizard-type="step">
             <div class="wizard-label">
               <i class="wizard-icon flaticon-bus-stop"></i>
-              <h3 class="wizard-title">2) Entry point selection</h3>
+              <h3 class="wizard-title">2) Entry Point Selection</h3>
             </div>
           </a>
           <a class="wizard-step" href="javascript:;" data-wizard-type="step">
             <div class="wizard-label">
               <i class="wizard-icon flaticon-responsive"></i>
-              <h3 class="wizard-title">3) Details of the sample</h3>
+              <h3 class="wizard-title">3) Details of the Sample</h3>
             </div>
           </a>
           <a class="wizard-step" href="javascript:;" data-wizard-type="step">
@@ -44,10 +47,10 @@
             <!--begin: Form Wizard Step 1-->
             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
               <div class="mb-10 font-weight-bold text-dark">
-                Upload the ZIP package of the sample
+                Upload the ZIP package of the Sample
               </div>
               <ngx-dropzone (change)="onSelect($event)">
-                <ngx-dropzone-label>Drop the ZIP package here</ngx-dropzone-label>
+                <ngx-dropzone-label>Drop the ZIP Package here</ngx-dropzone-label>
                 <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
                   <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-preview>
@@ -68,9 +71,6 @@
 
             <!--begin: Form Wizard Step 3-->
             <div class="pb-5" data-wizard-type="step-content">
-              <div class="mb-10 font-weight-bold text-dark">
-                Select your Services
-              </div>
               <div class="form-group">
                 <label>Name</label>
                 <input
@@ -81,15 +81,15 @@
                   value=""
                 />
                 <span class="form-text text-muted"
-                  >Please enter your Name.</span
+                  >Please enter Sample name.</span
                 >
               </div>
               <div class="form-group">
                 <label>Details</label>
                 <br>
-              <textarea rows="3" cols="87" pInputTextarea ></textarea>
+              <textarea rows="3" cols="106" pInputTextarea ></textarea>
                 <span class="form-text text-muted"
-                  >Please enter your Details.</span
+                  >Please enter Sample details.</span
                 >
               </div>
               <div class="form-group">
@@ -99,19 +99,16 @@
                   [(ngModel)]="model.preferreddelivery"
                   class="form-control"
                 >
-                  <option value="morning" selected>Select a category</option>
+                  <option value="morning" selected>Select a Category</option>
                   <option value="afternoon" >
                    Game
                   </option>
+                  <option value="evening">
+                    E-Learning
+                  </option>
                   <option value="afternoon">
-                    Story-Line
-                  </option>
-                  <option value="evening">
-                    E-learning
-                  </option>
-                  <option value="evening">
-                    Tool Software
-                  </option>
+                    Story Line
+                  </option>                  
                 </select>
               </div>
             </div>

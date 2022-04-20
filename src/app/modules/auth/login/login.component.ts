@@ -14,8 +14,8 @@ import { by } from 'protractor';
 export class LoginComponent implements OnInit, OnDestroy {
   
   defaultAuth: any = {
-    email: 'amitjain@yopmail.com',
-    password: 'amit1234',
+    email: 'sam2@mail.com',
+    password: '1234',
   };
   defaultStaffAuth: any = {
     email: 'shubham@yopmail.com',

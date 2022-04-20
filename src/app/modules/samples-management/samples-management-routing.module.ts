@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddSampleComponent } from './add-sample/add-sample.component';
+import { AllSamplesComponent } from './all-samples/all-samples.component';
 import { SamplesManagementComponent } from './samples-management.component';
 
 const routes: Routes = [
@@ -12,8 +13,12 @@ const routes: Routes = [
         path: 'add-sample',
         component: AddSampleComponent,
       },
-      { path: '', redirectTo: 'add-sample', pathMatch: 'full' },
-      { path: '**', redirectTo: 'add-sample', pathMatch: 'full' },
+      {
+        path: 'all-samples',
+        component: AllSamplesComponent,
+      },
+      { path: '', redirectTo: 'all-samples', pathMatch: 'full' },
+      { path: '**', redirectTo: 'all-samples', pathMatch: 'full' },
     ],
   },
 ];

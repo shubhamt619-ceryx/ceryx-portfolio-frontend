@@ -44,7 +44,7 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loadCategorySamples(category) {
     let dSub = this.commonService.getRows(`sample/list?category=${category.name}`).subscribe(res => {
-      this.categorySamples = res.items;
+      this.categorySamples = this._appendSelectedState(res.items);
       this.cd.detectChanges()
     });
     this.subscriptions.push(dSub);
@@ -58,6 +58,7 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       samplesToReturn.push(thisSample)
     });
+    return samplesToReturn;
   }
 
   ngAfterViewInit() {

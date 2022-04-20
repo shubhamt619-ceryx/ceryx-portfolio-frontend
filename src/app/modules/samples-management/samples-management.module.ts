@@ -9,11 +9,13 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import {TreeModule} from 'primeng-lts/tree';
 import {ToastModule} from 'primeng-lts/toast';
 import {InputTextareaModule} from 'primeng-lts/inputtextarea';
+import { AllSamplesComponent } from './all-samples/all-samples.component';
 
 @NgModule({
   declarations: [
     SamplesManagementComponent,
-    AddSampleComponent
+    AddSampleComponent,
+    AllSamplesComponent,
   ],
   imports: [
     CommonModule, 

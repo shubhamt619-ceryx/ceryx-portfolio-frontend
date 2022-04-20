@@ -52,19 +52,19 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     let filesData = [
       {
-          "label": "Documents",
+          "label": "Folder 1",
           "data": "Documents Folder",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children": [{
-                  "label": "Work",
+                  "label": "Subfolder 1",
                   "data": "Work Folder",
                   "expandedIcon": "pi pi-folder-open",
                   "collapsedIcon": "pi pi-folder",
                   "children": [{"label": "Expenses.doc", "icon": "pi pi-file", "data": "Expenses Document"}, {"label": "Resume.doc", "icon": "pi pi-file", "data": "Resume Document"}]
               },
               {
-                  "label": "Home",
+                  "label": "Subfolder 2",
                   "data": "Home Folder",
                   "expandedIcon": "pi pi-folder-open",
                   "collapsedIcon": "pi pi-folder",
@@ -72,7 +72,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
               }]
       },
       {
-          "label": "Pictures",
+          "label": "Folder 2",
           "data": "Pictures Folder",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
@@ -82,17 +82,17 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
               {"label": "primeui.png", "icon": "pi pi-image", "data": "PrimeUI Logo"}]
       },
       {
-          "label": "Movies",
+          "label": "Folder 3",
           "data": "Movies Folder",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children": [{
-                  "label": "Al Pacino",
+                  "label": "Subfolder 1",
                   "data": "Pacino Movies",
                   "children": [{"label": "Scarface", "icon": "pi pi-video", "data": "Scarface Movie"}, {"label": "Serpico", "icon": "pi pi-video", "data": "Serpico Movie"}]
               },
               {
-                  "label": "Robert De Niro",
+                  "label": "Subfolder 2",
                   "data": "De Niro Movies",
                   "children": [{"label": "Goodfellas", "icon": "pi pi-video", "data": "Goodfellas Movie"}, {"label": "Untouchables", "icon": "pi pi-video", "data": "Untouchables Movie"}]
               }]
@@ -133,9 +133,16 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     this.wizard = undefined;
   }
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
-  }
+    if(this.files.length > 1){ // checking if files array has more than one content
+    this.replaceFile(); // replace file
+    }
+    }
+    
+    //method for replacing file
+    replaceFile(){
+    this.files.splice(0,1); // index =0 , remove_count = 1
+    }
 
   onRemove(event) {
     console.log(event);

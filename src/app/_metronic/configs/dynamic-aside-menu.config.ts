@@ -38,13 +38,13 @@ export const DynamicAsideMenuConfig = {
       page: '/samples-management',
       submenu: [
         {
+          title: 'All Sample\'s',
+          page: '/samples-management/all-samples'
+        },
+        {
           title: 'Add Samples',
           page: '/samples-management/add-sample'
         },
-        // {
-        //   title: 'Roles',
-        //   page: '/user-management/roles'
-        // }
       ]
     },   
     { section: 'Portfolio Management' },
@@ -57,13 +57,13 @@ export const DynamicAsideMenuConfig = {
       page: '/portfolio-management',
       submenu: [
         {
-          title: 'Add portfolio',
+          title: 'All Portfolio\'s',
+          page: '/portfolio-management/all-portfolios'
+        },
+        {
+          title: 'Create portfolio',
           page: '/portfolio-management/add-portfolio'
         },
-        // {
-        //   title: 'Roles',
-        //   page: '/user-management/roles'
-        // }
       ]
     },   
   ]
