@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -8,6 +9,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 })
 export class PortfolioCategoryCardComponent implements OnInit, OnDestroy{
   @Input('sample') sample;
+  baseUrl = environment.s3BaseUrl;
   @Output() sampleSelected = new EventEmitter<string>();
   @Output() sampleDeselected = new EventEmitter<string>();
   constructor() {
@@ -20,7 +22,11 @@ export class PortfolioCategoryCardComponent implements OnInit, OnDestroy{
   ngOnDestroy() {
     
   }
-
+  launchSample(sample){
+    let launchUrl =  this.baseUrl + sample.link;
+    window.open(launchUrl, '_blank');
+  }
+  
   emitSampleSelected(){
     this.sample.isSelected = !this.sample.isSelected;
     if (this.sample.isSelected) {

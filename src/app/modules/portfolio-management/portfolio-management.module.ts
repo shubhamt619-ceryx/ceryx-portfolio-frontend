@@ -15,6 +15,8 @@ import { MessageModule } from 'primeng-lts/message';
 import { MessagesModule } from 'primeng-lts/messages';
 import { DeletePortfolioModalComponent } from './delete-portfolio-modal/delete-portfolio-modal.component';
 import { AllPortfoliosComponent } from './all-portfolios/all-portfolios.component';
+import { ButtonModule } from 'primeng-lts/button';
+import { CardModule } from 'primeng-lts/card';
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
@@ -36,6 +38,8 @@ import { AllPortfoliosComponent } from './all-portfolios/all-portfolios.componen
     MatGridListModule,
     MessagesModule,
     MessageModule,
+    ButtonModule,
+    CardModule,
   ]
 })
 export class PortfolioManagementModule { }

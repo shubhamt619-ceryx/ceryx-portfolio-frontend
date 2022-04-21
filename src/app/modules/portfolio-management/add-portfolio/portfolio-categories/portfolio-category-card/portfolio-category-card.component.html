@@ -5,4 +5,20 @@
         <h4>{{ sample.name }}</h4>
     </mat-card-content>
   </mat-card> -->
-  abc
+<span class="mat-elevation-z4">
+    <p-card (click)="emitSampleSelected()" [style]="{width: '300px'}">
+        <ng-template pTemplate="header">
+            <img alt="Card" height="150" src="{{baseUrl}}{{sample.thumbnail}}" />
+            <img *ngIf="sample.isSelected" class="selected-icon" src="assets/media/logos/dot.png" alt="">
+        </ng-template>
+        <div class="center-actions">
+          <h3>{{sample.name}}</h3>
+        </div>
+        <div class="center-actions">
+          <p-button label="Launch" icon="pi pi-play" (click)="launchSample(sample)"></p-button>
+        </div>
+        <ng-template pTemplate="footer">
+    
+        </ng-template>
+    </p-card>
+</span>

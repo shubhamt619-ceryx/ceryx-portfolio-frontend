@@ -1,6 +1,13 @@
 .selected-icon {
   position: absolute;
-  right: 5px;
-  top: 8px;
+  right: 20px;
+  top: 20px;
   width: 12px;
+}
+.p-card .p-card-title,
+.p-card-title {
+    text-align: center !important;
+}
+.center-actions {
+    text-align: center;
 }

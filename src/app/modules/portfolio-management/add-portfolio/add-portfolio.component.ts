@@ -29,6 +29,7 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
   loadCategories() {
    let dSub = this.commonService.getRows('category/list').subscribe(res => {
       this.categories = res.items;
+      this.loadCategorySamples(this.categories[0])
       this.cd.detectChanges()
     });
     this.subscriptions.push(dSub);

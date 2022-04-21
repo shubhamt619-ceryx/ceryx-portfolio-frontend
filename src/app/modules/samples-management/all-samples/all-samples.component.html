@@ -12,7 +12,7 @@
     <mat-grid-tile *ngFor="let sample of samples">
       <p-card [style]="{width: '300px'}" styleClass="p-card-shadow">
         <ng-template pTemplate="header">
-            <img alt="Card" height="150" [src]="sample.thumbnail">
+            <img alt="Card" height="150" src="{{baseUrl}}{{sample.thumbnail}}">
         </ng-template>
         <div class="center-actions">
           <h3>{{sample.name}}</h3>

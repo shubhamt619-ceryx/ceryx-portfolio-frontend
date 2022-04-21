@@ -50,7 +50,7 @@ export class AllSamplesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.samples = []
       res.items.forEach(element => {
         if (element.link != 777) {
-          element.thumbnail = this.baseUrl + element.thumbnail
+          //element.thumbnail = this.baseUrl + element.thumbnail
           this.samples.push(element);
         }
       });
