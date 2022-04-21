@@ -14,6 +14,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MessageModule } from 'primeng-lts/message';
 import { MessagesModule } from 'primeng-lts/messages';
 import { DeletePortfolioModalComponent } from './delete-portfolio-modal/delete-portfolio-modal.component';
+import { AllPortfoliosComponent } from './all-portfolios/all-portfolios.component';
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
@@ -21,6 +22,7 @@ import { DeletePortfolioModalComponent } from './delete-portfolio-modal/delete-p
     PortfolioCategoriesComponent,
     PortfolioCategoryCardComponent,
     DeletePortfolioModalComponent,
+    AllPortfoliosComponent,
   ],
   imports: [
     CommonModule,

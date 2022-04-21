@@ -14,7 +14,6 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
 
   portfolios: any[] = [];
   subscriptions: Subscription[] = [];
-    loadAllPortfolios: any;
 
   constructor(
     private messageService: MessageService,
@@ -24,12 +23,13 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
     ) { }
 
   ngOnInit(): void {
-    this.loadPortfolios();
+    
   }
 
   loadPortfolios() {
-   let dSub = this.commonService.getRows('category/list').subscribe(res => {
+   let dSub = this.commonService.getRows('portfolio/list').subscribe(res => {
       this.portfolios = res.items;
+      console.log(res);
       this.cd.detectChanges()
     });
     this.subscriptions.push(dSub);
@@ -39,14 +39,14 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
     const modalRef = this.modalService.open(DeletePortfolioModalComponent);
     modalRef.componentInstance._id = portfolio._id;
     modalRef.result.then((result) => {
-
-      this.loadAllPortfolios()
+        this.loadPortfolios()
      }, () => {}).catch(err => { 
       console.log(123);
      });
   }
 
   ngAfterViewInit() {
+    this.loadPortfolios();
   }
 
   ngOnDestroy() {

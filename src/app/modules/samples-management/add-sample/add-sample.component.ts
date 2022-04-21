@@ -5,6 +5,7 @@ import { KTUtil } from '../../../../assets/js/components/util';
 import { MessageService, TreeNode } from 'primeng-lts/api';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-add-sample',
   templateUrl: './add-sample.component.html',
@@ -29,8 +30,17 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   thumbnail = "";
   name = "";
   details = "";
-  category = "";
+  category:any = {
+    "_id" : 0,
+    "name": "-"
+  };
+  includeInDefaultPortfolio = false;
+  excludeFromSamplesSelection = false;
+  isSampleUploaded = false;
+  isFinalStep = false;
   tags:any[] = [];
+  baseUrl = environment.s3BaseUrl;
+  categories: any[] = [];
 
   constructor(
     private messageService: MessageService,
@@ -39,58 +49,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    this.messageService.clear()
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User updated', life: 3000 });
-    let filesData = [
-      {
-          "label": "Folder 1",
-          "data": "Documents Folder",
-          "expandedIcon": "pi pi-folder-open",
-          "collapsedIcon": "pi pi-folder",
-          "children": [{
-                  "label": "Subfolder 1",
-                  "data": "Work Folder",
-                  "expandedIcon": "pi pi-folder-open",
-                  "collapsedIcon": "pi pi-folder",
-                  "children": [{"label": "Expenses.doc", "icon": "pi pi-file", "data": "Expenses Document"}, {"label": "Resume.doc", "icon": "pi pi-file", "data": "Resume Document"}]
-              },
-              {
-                  "label": "Subfolder 2",
-                  "data": "Home Folder",
-                  "expandedIcon": "pi pi-folder-open",
-                  "collapsedIcon": "pi pi-folder",
-                  "children": [{"label": "Invoices.txt", "icon": "pi pi-file", "data": "Invoices for this month"}]
-              }]
-      },
-      {
-          "label": "Folder 2",
-          "data": "Pictures Folder",
-          "expandedIcon": "pi pi-folder-open",
-          "collapsedIcon": "pi pi-folder",
-          "children": [
-              {"label": "barcelona.jpg", "icon": "pi pi-image", "data": "Barcelona Photo"},
-              {"label": "logo.jpg", "icon": "pi pi-image", "data": "PrimeFaces Logo"},
-              {"label": "primeui.png", "icon": "pi pi-image", "data": "PrimeUI Logo"}]
-      },
-      {
-          "label": "Folder 3",
-          "data": "Movies Folder",
-          "expandedIcon": "pi pi-folder-open",
-          "collapsedIcon": "pi pi-folder",
-          "children": [{
-                  "label": "Subfolder 1",
-                  "data": "Pacino Movies",
-                  "children": [{"label": "Scarface", "icon": "pi pi-video", "data": "Scarface Movie"}, {"label": "Serpico", "icon": "pi pi-video", "data": "Serpico Movie"}]
-              },
-              {
-                  "label": "Subfolder 2",
-                  "data": "De Niro Movies",
-                  "children": [{"label": "Goodfellas", "icon": "pi pi-video", "data": "Goodfellas Movie"}, {"label": "Untouchables", "icon": "pi pi-video", "data": "Untouchables Movie"}]
-              }]
-      }
-  ];
-    this.files1 = filesData;
-
+    this.loadCategories();
   }
 
   ngAfterViewInit() {
@@ -111,20 +70,33 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     this.wizard.on('change', () => {
       //console.log(this.wizard.getStep());
       if (this.wizard.getStep() == 4) {
+        this.isFinalStep = true;
+        this.cd.detectChanges();
         this.updateSampleInfo();
       } else if (this.wizard.getStep() == 1) {
-        this.uploadSampleFile();
+        if (!this.isSampleUploaded) {
+          this.uploadSampleFile();
+        }
       }
       setTimeout(() => {
         KTUtil.scrollTop();
       }, 500);
     });
   }
+
+  loadCategories() {
+    let dSub = this.commonService.getRows('category/list').subscribe(res => {
+       this.categories = res.items;
+       this.cd.detectChanges()
+     });
+     this.subscriptions.push(dSub);
+   }
+
   updateSampleInfo() {
     let sampleData = {
       "sampleId" : this.sampleId,
       "name" : this.name,
-      "category" : this.category,
+      "category" : this.category._id,
       "tags" : this.tags,
       "thumbnail" : this.thumbnail[0],
       "link" : this.launchUrl[0],
@@ -149,6 +121,8 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
         "in_staff_portfolio": false,
         "createdBy": random,
         "fileName": this.files[0].name,
+        "include_in_default_portfolio": this.includeInDefaultPortfolio,
+        "exclude_from_sample_selection": this.excludeFromSamplesSelection,
        };
       let fileSub = this.commonService.fetchRow("sample/create", fileDetails).subscribe(res => {
         console.log(res, 'file res');
@@ -176,6 +150,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(res, 'sample response');
       this.messageService.clear()
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'File uploaded successfully', life: 2000 });
+      this.isSampleUploaded = true;
       this.getUploadedSampleDetails()
       //this.wizard.goNext()
     });
