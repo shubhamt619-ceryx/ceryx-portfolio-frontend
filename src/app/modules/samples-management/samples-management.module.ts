@@ -10,6 +10,9 @@ import {TreeModule} from 'primeng-lts/tree';
 import {ToastModule} from 'primeng-lts/toast';
 import {InputTextareaModule} from 'primeng-lts/inputtextarea';
 import { AllSamplesComponent } from './all-samples/all-samples.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,7 @@ import { AllSamplesComponent } from './all-samples/all-samples.component';
     AllSamplesComponent,
   ],
   imports: [
-    CommonModule, 
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     InlineSVGModule,
@@ -26,7 +29,10 @@ import { AllSamplesComponent } from './all-samples/all-samples.component';
     NgxDropzoneModule,
     TreeModule,
     ToastModule,
-    InputTextareaModule
+    InputTextareaModule,
+    MatCardModule,
+    MatGridListModule,
+    MatButtonModule,
   ]
 })
 export class SamplesManagementModule { }

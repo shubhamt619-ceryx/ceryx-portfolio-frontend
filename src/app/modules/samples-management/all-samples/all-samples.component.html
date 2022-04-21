@@ -8,6 +8,19 @@
     </div>
   </div>
   <div class="card-body">
-   Content here
+    <mat-grid-list cols="3" gutterSize="15">
+    <mat-grid-tile *ngFor="let sample of samples" class="mat-elevation-z4 pb-5">
+      <mat-card class="example-card">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+            <h3>{{ sample.name }}</h3>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>Edit</button>
+          <button mat-button>Delete</button>
+        </mat-card-actions>
+      </mat-card>
+  </mat-grid-tile>
+    </mat-grid-list>
   </div>
 </div>

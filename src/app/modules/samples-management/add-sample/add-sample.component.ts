@@ -104,23 +104,35 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   uploadSampleFile(){
     // fileName
+    let random = Math.floor((Math.random() * 9999) + 1);
     if(this.files.length == 1){
       console.log(this.files);
       let fileDetails = { 
-        "name": "0",
-        "link": "0",
+        "name": random,
+        "link": random,
         "tags": [],
-        "category": "0",
-        "include_portfolio": ["0"],
+        "category": random,
+        "include_portfolio": [random],
         "in_staff_portfolio": false,
-        "createdBy": "0",
+        "createdBy": random,
         "fileName": this.files[0].name,
        };
       let fileSub = this.commonService.fetchRow("sample/create", fileDetails).subscribe(res => {
         console.log(res, 'file res');
+        this.uploadSampleFilePutCall(res.upload_uri);
       });
       this.subscriptions.push(fileSub);
     }
+  }
+
+
+  uploadSampleFilePutCall(upload_uri) {
+    let fileData = new FormData();
+    fileData.append("file", this.files[0]);
+    let fileSub = this.commonService.putRow(upload_uri, fileData).subscribe(res => {
+        console.log(res, 'file res frin s3');
+    });
+    this.subscriptions.push(fileSub);
   }
 
   onSubmit() {

@@ -115,6 +115,20 @@ export class CommonService {
         );
     }
 
+    public putRow(url:string, data:{}): Observable < any > {
+        const httpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.authToken}`,
+        });
+        return this.http.put<JsonResponseModel> (url, data, {
+            headers: httpHeaders,
+        }).pipe(
+            map((response: JsonResponseModel) => {
+                return response.data;
+              })
+        );
+    }
+
     public deleteRow(url:string): Observable < any > {
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
