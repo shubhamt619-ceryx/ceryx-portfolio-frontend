@@ -10,14 +10,17 @@ import {TreeModule} from 'primeng-lts/tree';
 import {ToastModule} from 'primeng-lts/toast';
 import { PortfolioCategoriesComponent } from './add-portfolio/portfolio-categories/portfolio-categories.component';
 import { PortfolioCategoryCardComponent } from './add-portfolio/portfolio-categories/portfolio-category-card/portfolio-category-card.component';
-import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MessageModule } from 'primeng-lts/message';
+import { MessagesModule } from 'primeng-lts/messages';
+import { DeletePortfolioModalComponent } from './delete-portfolio-modal/delete-portfolio-modal.component';
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
     AddPortfolioComponent,
     PortfolioCategoriesComponent,
     PortfolioCategoryCardComponent,
+    DeletePortfolioModalComponent,
   ],
   imports: [
     CommonModule,
@@ -28,8 +31,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     NgxDropzoneModule,
     TreeModule,
     ToastModule,
-    MatCardModule,
     MatGridListModule,
+    MessagesModule,
+    MessageModule,
   ]
 })
 export class PortfolioManagementModule { }

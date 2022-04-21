@@ -9,7 +9,7 @@ export const DynamicAsideMenuConfig = {
       translate: 'MENU.DASHBOARD',
       bullet: 'dot',
     },
-    { section: 'User Management' },
+    // { section: 'User Management' },
     {
       title: 'User Management',
       root: true,
@@ -28,7 +28,7 @@ export const DynamicAsideMenuConfig = {
         // }
       ]
     },
-    { section: 'Sample Management' },
+    // { section: 'Sample Management' },
     {
       title: 'Sample Management',
       root: true,
@@ -47,7 +47,7 @@ export const DynamicAsideMenuConfig = {
         },
       ]
     },   
-    { section: 'Portfolio Management' },
+    // { section: 'Portfolio Management' },
     {
       title: 'Portfolio Management',
       root: true,

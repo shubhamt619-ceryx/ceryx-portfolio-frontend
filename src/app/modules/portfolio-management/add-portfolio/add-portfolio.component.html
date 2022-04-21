@@ -14,12 +14,15 @@
     <div class="card card-custom card-tall p-10">
       <div class="card-header">
         <div class="card-title">
-          <h3 class="card-label">Sample Items 
+          <h3 class="card-label">Samples
             <span *ngIf="selectedSamples.length > 0">Total {{ selectedSamples.length }} samples selected.</span>
           </h3>
         </div>
       </div>
       <div class="card-body">
+        <span *ngIf="!categorySamples.length">
+          <h3>Oops, No Samples found for selected category.</h3>
+        </span>
         <mat-grid-list cols="3" rowHeight="300" gutterSize="20">
           <mat-grid-tile *ngFor="let sample of categorySamples">
             <app-portfolio-category-card [sample]="sample" (sampleSelected)="addToSelectedSamples(sample)" (sampleDeselected)="removeSelectedSample(sample)"></app-portfolio-category-card>

@@ -8,18 +8,24 @@
     </div>
   </div>
   <div class="card-body">
-    <mat-grid-list cols="3" gutterSize="15">
-    <mat-grid-tile *ngFor="let sample of samples" class="mat-elevation-z4 pb-5">
-      <mat-card class="example-card">
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        <mat-card-content>
-            <h3>{{ sample.name }}</h3>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>Edit</button>
-          <button mat-button>Delete</button>
-        </mat-card-actions>
-      </mat-card>
+    <mat-grid-list cols="3" gutterSize="15" rowHeight="350">
+    <mat-grid-tile *ngFor="let sample of samples">
+      <p-card [style]="{width: '300px'}" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+            <img alt="Card" height="150" [src]="sample.thumbnail">
+        </ng-template>
+        <div class="center-actions">
+          <h3>{{sample.name}}</h3>
+        </div>
+        <div class="center-actions">
+          <p-button label="Launch" icon="pi pi-play"></p-button>
+          <p-button label="Edit" icon="pi pi-pencil" [style]="{'margin-left': '.5em'}"></p-button>
+          <p-button label="Delete" icon="pi pi-trash" (click)="deleteSample(sample)" styleClass="p-button-danger" [style]="{'margin-left': '.5em'}"></p-button>
+        </div>
+        <ng-template pTemplate="footer">
+
+        </ng-template>
+    </p-card>
   </mat-grid-tile>
     </mat-grid-list>
   </div>

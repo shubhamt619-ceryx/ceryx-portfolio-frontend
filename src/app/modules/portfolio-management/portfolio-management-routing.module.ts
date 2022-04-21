@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddPortfolioComponent } from './add-portfolio/add-portfolio.component';
+import { AllPortfoliosComponent } from './all-portfolios/all-portfolios.component';
 import { PortfolioManagementComponent } from './portfolio-management.component';
 
 const routes: Routes = [
@@ -12,8 +13,12 @@ const routes: Routes = [
         path: 'add-portfolio',
         component: AddPortfolioComponent,
       },
-      { path: '', redirectTo: 'add-portfolio', pathMatch: 'full' },
-      { path: '**', redirectTo: 'add-portfolio', pathMatch: 'full' },
+      {
+        path: 'all-portfolio',
+        component: AllPortfoliosComponent,
+      },
+      { path: '', redirectTo: 'all-portfolio', pathMatch: 'full' },
+      { path: '**', redirectTo: 'all-portfolio', pathMatch: 'full' },
     ],
   },
 ];

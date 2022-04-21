@@ -13,12 +13,20 @@ import { AllSamplesComponent } from './all-samples/all-samples.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
+import {CardModule} from 'primeng-lts/card';
+import { MatListModule } from '@angular/material/list';
+import { ButtonModule } from 'primeng-lts/button';
+import { DeleteSampleModalComponent } from './delete-sample-modal/delete-sample-modal.component';
+import { MessagesModule } from 'primeng-lts/messages';
+import { MessageModule } from 'primeng-lts/message';
+import {ChipsModule} from 'primeng-lts/chips';
 
 @NgModule({
   declarations: [
     SamplesManagementComponent,
     AddSampleComponent,
     AllSamplesComponent,
+    DeleteSampleModalComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +41,12 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatGridListModule,
     MatButtonModule,
+    CardModule,
+    MatListModule,
+    ButtonModule,
+    MessagesModule,
+    MessageModule,
+    ChipsModule,
   ]
 })
 export class SamplesManagementModule { }

@@ -1,3 +1,4 @@
+<p-messages></p-messages>
 <div class="card card-custom gutter-b">
   <div class="card-header">
     <div class="card-title">
@@ -15,26 +16,32 @@
         <div class="wizard-steps p-8 p-lg-10">
           <a class="wizard-step" href="javascript:;" data-wizard-type="step" data-wizard-state="current">
             <div class="wizard-label">
-              <i class="wizard-icon flaticon-list"></i>
-              <h3 class="wizard-title">1) Upload Sample</h3>
+              <i class="wizard-icon flaticon2-add"></i>
+              <h3 class="wizard-title">Upload Sample</h3>
             </div>
           </a>
           <a class="wizard-step" href="javascript:;" data-wizard-type="step">
             <div class="wizard-label">
-              <i class="wizard-icon flaticon-bus-stop"></i>
-              <h3 class="wizard-title">2) Entry Point Selection</h3>
+              <i class="wizard-icon flaticon2-browser-1"></i>
+              <h3 class="wizard-title">Entry Point Selection</h3>
             </div>
           </a>
           <a class="wizard-step" href="javascript:;" data-wizard-type="step">
             <div class="wizard-label">
-              <i class="wizard-icon flaticon-responsive"></i>
-              <h3 class="wizard-title">3) Details of the Sample</h3>
+              <i class="wizard-icon flaticon2-image-file"></i>
+              <h3 class="wizard-title">Thumbnail Selection</h3>
             </div>
           </a>
           <a class="wizard-step" href="javascript:;" data-wizard-type="step">
             <div class="wizard-label">
-              <i class="wizard-icon flaticon-truck"></i>
-              <h3 class="wizard-title">4) Completed!</h3>
+              <i class="wizard-icon flaticon2-writing"></i>
+              <h3 class="wizard-title">Details of the Sample</h3>
+            </div>
+          </a>
+          <a class="wizard-step" href="javascript:;" data-wizard-type="step">
+            <div class="wizard-label">
+              <i class="wizard-icon flaticon2-correct"></i>
+              <h3 class="wizard-title">Completed!</h3>
             </div>
           </a>
         </div>
@@ -55,80 +62,91 @@
                   <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
                 </ngx-dropzone-preview>
               </ngx-dropzone>
-
-              <div style="right: 0;position: absolute;">
-                <br><br>
-                <button type="button" class="btn btn-primary" (click)="uploadSampleFile()">Upload File</button>
-              </div>
-              <br><br>
-              <br><br>
             </div>
             <!--end: Form Wizard Step 1-->
 
             <!--begin: Form Wizard Step 2-->
             <div class="pb-5" data-wizard-type="step-content">
               <div class="mb-10 font-weight-bold text-dark">
-               Please select the entry point : 
+                Please select the entry point :
               </div>
-              <p-tree [value]="files1" selectionMode="single" [(selection)]="selectedFile"
+              <!-- <p-tree [value]="files1" selectionMode="single" [(selection)]="selectedFile"
                 (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
-              <p-toast></p-toast>
+              <p-toast></p-toast> -->
+              <div>
+                <mat-selection-list [multiple]="false" [(ngModel)]="launchUrl" [ngModelOptions]="{standalone: true}">
+                  <mat-list-option [value]="file" *ngFor="let file of uploadedFiles">
+                    {{file}}
+                  </mat-list-option>
+                </mat-selection-list>
+              </div>
             </div>
             <!--end: Form Wizard Step 2-->
 
             <!--begin: Form Wizard Step 3-->
-            <div class="pb-5" data-wizard-type="step-content">
-              <div class="form-group">
-                <label>Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="address1"
-                  placeholder=""
-                  value=""
-                />
-                <span class="form-text text-muted"
-                  >Please enter Sample name.</span
-                >
+            <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+              <div class="mb-10 font-weight-bold text-dark">
+                Please select the thumbnail :
               </div>
-              <div class="form-group">
-                <label>Details</label>
-                <br>
-              <textarea rows="3" cols="106" pInputTextarea ></textarea>
-                <span class="form-text text-muted"
-                  >Please enter Sample details.</span
-                >
-              </div>
-              <div class="form-group">
-                <label>Categories</label>
-                <select
-                  name=""
-                  class="form-control"
-                >
-                  <option value="morning" selected>Select a Category</option>
-                  <option value="afternoon" >
-                   Game
-                  </option>
-                  <option value="evening">
-                    E-Learning
-                  </option>
-                  <option value="afternoon">
-                    Story Line
-                  </option>                  
-                </select>
+              <!-- <p-tree [value]="files1" selectionMode="single" [(selection)]="selectedFile"
+                (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+              <p-toast></p-toast> -->
+              <div>
+                <mat-selection-list [multiple]="false" [(ngModel)]="thumbnail" [ngModelOptions]="{standalone: true}">
+                  <mat-list-option [value]="file" *ngFor="let file of uploadedImageFiles">
+                    {{file}}
+                  </mat-list-option>
+                </mat-selection-list>
               </div>
             </div>
             <!--end: Form Wizard Step 3-->
 
             <!--begin: Form Wizard Step 4-->
             <div class="pb-5" data-wizard-type="step-content">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="address1" placeholder="" value="" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"/>
+                <span class="form-text text-muted">Please enter Sample name.</span>
+              </div>
+              <div class="form-group">
+                <label>Details</label>
+                <br>
+                <textarea rows="3" cols="106" pInputTextarea [(ngModel)]="details" [ngModelOptions]="{standalone: true}"></textarea>
+                <span class="form-text text-muted">Please enter Sample details.</span>
+              </div>
+              <div class="form-group">
+                <label>Categories</label>
+                <select name="" class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+                  <option value="morning" selected>Select a Category</option>
+                  <option value="game">
+                    Game
+                  </option>
+                  <option value="e-learning">
+                    E-Learning
+                  </option>
+                  <option value="story-line">
+                    Story Line
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tags</label>
+                <div class="p-fluid">
+                  <p-chips [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"></p-chips>              
+                </div>
+              </div>
+            </div>
+            <!--end: Form Wizard Step 4-->
+
+            <!--begin: Form Wizard Step 5-->
+            <div class="pb-5" data-wizard-type="step-content">
               <div class="mb-10 font-weight-bold text-dark">
-                Review your Details and Submit
+                Sample uploaded successfully with below details:
               </div>
               <div class="border-bottom mb-5 pb-5">
                 <div class="font-weight-bolder mb-3">Sample Entry Point:</div>
                 <div class="line-height-xl">
-                  index.html
+                  {{ launchUrl }}
                 </div>
               </div>
               <div class="border-bottom mb-5 pb-5">
@@ -136,15 +154,17 @@
                   Sample Details:
                 </div>
                 <div class="line-height-xl">
-                  Treasure Hunt
+                  {{ name }}
                   <br>
-                  Treasure Hunt is a game made for SCORM based LMS.
+                  {{ details }}
                   <br>
-                  Game
+                  {{category}}
+                  <br>
+                  {{tags}}
                 </div>
               </div>
             </div>
-            <!--end: Form Wizard Step 4-->
+            <!--end: Form Wizard Step 5-->
 
             <!--begin: Form Actions -->
             <div class="d-flex justify-content-between pt-10">
