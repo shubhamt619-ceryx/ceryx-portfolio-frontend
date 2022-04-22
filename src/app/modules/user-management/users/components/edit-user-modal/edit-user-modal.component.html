@@ -41,7 +41,7 @@
             <label class="form-label">Email</label>
             <input type="text" class="form-control form-control-lg form-control-solid" name="email"
               placeholder="Enter your email" autocomplete="off" [class.is-invalid]="isControlInvalid('email')"
-              [class.is-valid]="isControlValid('email')" formControlName="email" disabled/>
+              [class.is-valid]="isControlValid('email')" formControlName="email" [disabled]="!isNewUser" />
             <div class="valid-feedback" *ngIf="isControlValid('email')">
               Name was entered correct
             </div>

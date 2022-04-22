@@ -7,7 +7,47 @@
       <button type="button" class="btn btn-primary" routerLink="/portfolio-management/add-portfolio">New Portfolio</button>
     </div>
   </div>
+  <!-- <span *ngFor="let portfolio of portfolios">123{{ portfolio.alias }}</span> -->
   <div class="card-body">
-    <span *ngFor="let portfolio of portfolios">123{{ portfolio.alias }}</span>
+    <p-table #dt1 [value]="portfolios" dataKey="_id"
+    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
+    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['alias']">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-jc-end p-ai-end">
+          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left p-ml-auto">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+          </span>
+      </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Link</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-portfolio>
+            <tr>
+                <td>{{portfolio.alias}}</td>
+                <td>{{portfolio.startDate}}</td>
+                <td>{{portfolio.endDate}}</td>
+                <td>
+                  <a href="{{viewerUrl}}{{portfolio.link}}" target="_blank">{{viewerUrl}}{{portfolio.link}}</a>
+                </td>
+                <td>
+                  <div class="actions">
+                    <button pButton pRipple type="button mr-5" (click)=viewPortfolio(portfolio) icon="pi pi-eye" class="p-button-rounded p-button-info action-button"></button>
+                    <button *ngIf="!portfolio.isDefault" pButton pRipple type="button" (click)=deletePortfolio(portfolio) icon="pi pi-trash" class="p-button-rounded p-button-danger action-button"></button>
+                  </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
   </div>
 </div>

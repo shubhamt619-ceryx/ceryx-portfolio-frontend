@@ -27,6 +27,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
   
   isLoading$;
   formGroup: FormGroup;
+  isNewUser = false;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -50,12 +51,14 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
       this.user = new UserModel();
       this.user.clearUser();
       this.isLoading$ = false;
+      this.isNewUser = true;
       this.loadForm();
     } else {
       let dataToPost = { email: this.user.email };
       const sb = this.commonService.fetchRow("user/userdetails", dataToPost).subscribe((user: UserModel) => {
         this.user = user;
         console.log(this.user, 'this.user');
+        this.isNewUser = false;
         this.loadForm();
         this.isLoading$ = false;
       });

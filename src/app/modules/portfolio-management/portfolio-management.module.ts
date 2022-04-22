@@ -17,6 +17,13 @@ import { DeletePortfolioModalComponent } from './delete-portfolio-modal/delete-p
 import { AllPortfoliosComponent } from './all-portfolios/all-portfolios.component';
 import { ButtonModule } from 'primeng-lts/button';
 import { CardModule } from 'primeng-lts/card';
+import { TableModule } from 'primeng-lts/table';
+import {RatingModule} from 'primeng-lts/rating';
+import { InputTextModule } from 'primeng-lts/inputtext';
+import { CreatePortfolioModalComponent } from './add-portfolio/create-portfolio-modal/create-portfolio-modal.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {CalendarModule} from 'primeng-lts/calendar';
+
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
@@ -25,6 +32,7 @@ import { CardModule } from 'primeng-lts/card';
     PortfolioCategoryCardComponent,
     DeletePortfolioModalComponent,
     AllPortfoliosComponent,
+    CreatePortfolioModalComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +48,11 @@ import { CardModule } from 'primeng-lts/card';
     MessageModule,
     ButtonModule,
     CardModule,
+    TableModule,
+    RatingModule,
+    InputTextModule,
+    MatCheckboxModule,
+    CalendarModule,
   ]
 })
 export class PortfolioManagementModule { }

@@ -1,8 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng-lts/api';
+import { Table } from 'primeng-lts/table';
 import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
+import { environment } from 'src/environments/environment';
 import { DeletePortfolioModalComponent } from '../delete-portfolio-modal/delete-portfolio-modal.component';
 @Component({
   selector: 'app-all-portfolios',
@@ -14,6 +16,9 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
 
   portfolios: any[] = [];
   subscriptions: Subscription[] = [];
+  baseUrl = environment.s3BaseUrl;
+  viewerUrl = environment.viewerUrl;
+  loading = false;
 
   constructor(
     private messageService: MessageService,
@@ -27,22 +32,32 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   loadPortfolios() {
+  this.loading = true;
    let dSub = this.commonService.getRows('portfolio/list').subscribe(res => {
       this.portfolios = res.items;
-      console.log(res);
+      this.loading = false;
       this.cd.detectChanges()
     });
     this.subscriptions.push(dSub);
   }
 
+  viewPortfolio(portfolio){
+    let launchUrl =  this.viewerUrl + portfolio.link;
+    window.open(launchUrl, '_blank');
+  }
+
   deletePortfolio(portfolio) {
     const modalRef = this.modalService.open(DeletePortfolioModalComponent);
-    modalRef.componentInstance._id = portfolio._id;
+    modalRef.componentInstance._id = portfolio.link;
     modalRef.result.then((result) => {
         this.loadPortfolios()
      }, () => {}).catch(err => { 
       console.log(123);
      });
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 
   ngAfterViewInit() {

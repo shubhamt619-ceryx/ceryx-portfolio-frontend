@@ -1,8 +1,11 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { MessageService } from 'primeng-lts/api';
 import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
+import { DeletePortfolioModalComponent } from '../delete-portfolio-modal/delete-portfolio-modal.component';
+import { CreatePortfolioModalComponent } from './create-portfolio-modal/create-portfolio-modal.component';
 @Component({
   selector: 'app-add-portfolio',
   templateUrl: './add-portfolio.component.html',
@@ -19,10 +22,12 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private messageService: MessageService,
     private commonService: CommonService,
+    private modalService: NgbModal,
     private cd: ChangeDetectorRef,
     ) { }
 
   ngOnInit(): void {
+    //this.createPortfolio()
     this.loadCategories();
   }
 
@@ -60,6 +65,22 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
       samplesToReturn.push(thisSample)
     });
     return samplesToReturn;
+  }
+  _collectSelectedSampleIds(selectedSamples) {
+    let sampleIds = [];
+    selectedSamples.forEach(sample => {
+      sampleIds.push(sample._id);
+    });
+    return sampleIds;
+  }
+  createPortfolio() {
+    const modalRef = this.modalService.open(CreatePortfolioModalComponent, { size: 'lg' });
+    modalRef.componentInstance.selectedSamples = this._collectSelectedSampleIds(this.selectedSamples);
+    modalRef.result.then((result) => {
+        
+     }, () => {}).catch(err => { 
+      console.log(123);
+     });
   }
 
   ngAfterViewInit() {

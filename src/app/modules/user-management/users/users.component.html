@@ -13,13 +13,13 @@
     <p-table #dt1 [value]="users" dataKey="id"
     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [globalFilterFields]="['name','email']">
+    [globalFilterFields]="['name','email','role']">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-jc-end p-ai-end">
           <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
           <span class="p-input-icon-left p-ml-auto">
               <i class="pi pi-search"></i>
-              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"/>
           </span>
       </div>
   </ng-template>
@@ -39,7 +39,7 @@
                 <td>{{user.email}}</td>
                 <td>
                     <button pButton pRipple type="button" (click)=viewUser(user) icon="pi pi-eye" class="p-button-rounded p-button-info action-button"></button>
-                    <button pButton pRipple type="button" (click)=editUser(user) icon="pi pi-pencil" class="p-button-rounded p-button-primary action-button"></button>
+                    <!-- <button pButton pRipple type="button" (click)=editUser(user) icon="pi pi-pencil" class="p-button-rounded p-button-primary action-button"></button> -->
                     <button pButton pRipple type="button" (click)=deleteUser(user) icon="pi pi-trash" class="p-button-rounded p-button-danger action-button"></button>
                 </td>
             </tr>

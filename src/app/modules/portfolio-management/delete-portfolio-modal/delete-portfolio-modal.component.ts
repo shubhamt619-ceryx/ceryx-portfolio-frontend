@@ -24,7 +24,7 @@ export class DeletePortfolioModalComponent implements OnInit, OnDestroy {
 
   deletePortfolio() {
     this.isLoading = true;
-    let loadSub = this.commonService.deleteRow('protfolio/delete/' + this._id).subscribe(res => {
+    let loadSub = this.commonService.deleteRow('portfolio/delete/' + this._id).subscribe(res => {
       this.isLoading = false;
       // User delete success
       this.modal.close(true)

@@ -38,7 +38,7 @@ export const DynamicAsideMenuConfig = {
       page: '/samples-management',
       submenu: [
         {
-          title: 'All Sample\'s',
+          title: 'All Samples',
           page: '/samples-management/all-samples'
         },
         {
@@ -57,7 +57,7 @@ export const DynamicAsideMenuConfig = {
       page: '/portfolio-management',
       submenu: [
         {
-          title: 'All Portfolio\'s',
+          title: 'All Portfolios',
           page: '/portfolio-management/all-portfolios'
         },
         {

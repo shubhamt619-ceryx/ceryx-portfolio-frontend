@@ -32,6 +32,7 @@ export class UsersComponent implements
   confirmationService: any;
   product: any;
   products: any;
+  searchText = "";
   constructor(
     private commonService: CommonService,
     private modalService: NgbModal,
@@ -124,6 +125,7 @@ export class UsersComponent implements
   }
 
   clear(table: Table) {
+    this.searchText = "";
     table.clear();
   }
   viewUser(user: UserModel){
