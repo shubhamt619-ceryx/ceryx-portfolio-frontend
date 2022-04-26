@@ -23,7 +23,7 @@ import { InputTextModule } from 'primeng-lts/inputtext';
 import { CreatePortfolioModalComponent } from './add-portfolio/create-portfolio-modal/create-portfolio-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {CalendarModule} from 'primeng-lts/calendar';
-
+import {ClipboardModule} from '@angular/cdk/clipboard';
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
@@ -53,6 +53,7 @@ import {CalendarModule} from 'primeng-lts/calendar';
     InputTextModule,
     MatCheckboxModule,
     CalendarModule,
+    ClipboardModule,
   ]
 })
 export class PortfolioManagementModule { }

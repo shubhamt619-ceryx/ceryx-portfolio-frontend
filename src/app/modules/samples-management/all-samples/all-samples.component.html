@@ -19,7 +19,7 @@
         </div>
         <div class="center-actions">
           <p-button label="Launch" icon="pi pi-play" (click)="launchSample(sample)"></p-button>
-          <p-button label="Edit" icon="pi pi-pencil" [style]="{'margin-left': '.5em'}"></p-button>
+          <p-button label="Edit" icon="pi pi-pencil" (click)="editSample(sample)" [style]="{'margin-left': '.5em'}"></p-button>
           <p-button label="Delete" icon="pi pi-trash" (click)="deleteSample(sample)" styleClass="p-button-danger" [style]="{'margin-left': '.5em'}"></p-button>
         </div>
         <ng-template pTemplate="footer">

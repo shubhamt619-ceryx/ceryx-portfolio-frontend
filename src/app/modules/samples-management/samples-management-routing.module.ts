@@ -14,6 +14,10 @@ const routes: Routes = [
         component: AddSampleComponent,
       },
       {
+        path: 'edit-sample',
+        component: AddSampleComponent,
+      },
+      {
         path: 'all-samples',
         component: AllSamplesComponent,
       },

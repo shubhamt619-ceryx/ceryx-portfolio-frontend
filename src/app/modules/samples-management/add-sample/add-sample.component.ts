@@ -6,6 +6,7 @@ import { MessageService, TreeNode } from 'primeng-lts/api';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-add-sample',
   templateUrl: './add-sample.component.html',
@@ -38,6 +39,8 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   excludeFromSamplesSelection = false;
   isSampleUploaded = false;
   isFinalStep = false;
+  isEditMode = false;
+  state:any;
   tags:any[] = [];
   baseUrl = environment.s3BaseUrl;
   categories: any[] = [];
@@ -49,7 +52,12 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
+    
     this.loadCategories();
+  }
+
+  loadMode() {
+    
   }
 
   ngAfterViewInit() {

@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { environment } from 'src/environments/environment';
 import { DeletePortfolioModalComponent } from '../delete-portfolio-modal/delete-portfolio-modal.component';
+import {Clipboard} from '@angular/cdk/clipboard';
 @Component({
   selector: 'app-all-portfolios',
   templateUrl: './all-portfolios.component.html',
@@ -25,10 +26,17 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
     private commonService: CommonService,
     private modalService: NgbModal,
     private cd: ChangeDetectorRef,
+    private clipboard: Clipboard,
     ) { }
 
   ngOnInit(): void {
     
+  }
+
+  copyPortfolioLink(portfolio) {
+    this.clipboard.copy(this.viewerUrl + portfolio.link);
+    this.messageService.clear()
+      this.messageService.add({ severity: 'success', summary: 'Link copied', detail: 'Link was copied successfully', life: 2000 });
   }
 
   loadPortfolios() {

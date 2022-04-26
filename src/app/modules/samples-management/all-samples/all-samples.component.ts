@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng-lts/api';
 import { Subscription } from 'rxjs';
@@ -22,6 +23,7 @@ export class AllSamplesComponent implements OnInit, AfterViewInit, OnDestroy {
     private commonService: CommonService,
     private modalService: NgbModal,
     private cd: ChangeDetectorRef,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,13 @@ export class AllSamplesComponent implements OnInit, AfterViewInit, OnDestroy {
   launchSample(sample){
     let launchUrl =  this.baseUrl + sample.link;
     window.open(launchUrl, '_blank');
+  }
+
+  editSample(sample){
+    this.router.navigate(['/samples-management/edit-sample'], {state: {data: {
+      isEditMode: true,
+      sampleId: sample._id
+    }}});
   }
 
   loadAllSamples() {

@@ -1,3 +1,4 @@
+<p-messages></p-messages>
 <div class="card card-custom gutter-b">
   <div class="card-header">
     <div class="card-title">
@@ -44,6 +45,7 @@
                   <div class="actions">
                     <button pButton pRipple type="button mr-5" (click)=viewPortfolio(portfolio) icon="pi pi-eye" class="p-button-rounded p-button-info action-button"></button>
                     <button *ngIf="!portfolio.isDefault" pButton pRipple type="button" (click)=deletePortfolio(portfolio) icon="pi pi-trash" class="p-button-rounded p-button-danger action-button"></button>
+                    <button pButton pRipple type="button" (click)=copyPortfolioLink(portfolio) icon="pi pi-copy" class="p-button-rounded p-button-default action-button"></button>
                   </div>
                 </td>
             </tr>
