@@ -75,7 +75,9 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     let sampleSub = this.commonService.getRow('sample/' + sampleId).subscribe(res => {
       console.log(res);
       this.includeInDefaultPortfolio = res.include_in_default_portfolio;
-      //this.excludeFromSamplesSelection = res.;
+      this.excludeFromSamplesSelection = res.in_staff_portfolio;
+      this.uploadedFiles = res.uploadedFiles.filter(file => !file.includes(".jpg") && !file.includes(".png"));
+      this.uploadedImageFiles = res.uploadedFiles.filter(file => file.includes(".jpg") || file.includes(".png"));
     });
     this.subscriptions.push(sampleSub)
   }

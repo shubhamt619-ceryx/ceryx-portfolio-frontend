@@ -24,7 +24,7 @@
       </div>
       <div class="card-body">
         <span *ngIf="!categorySamples.length">
-          <h3>Oops, No Samples found for selected category.</h3>
+          <app-ceryx-icon icon="no_data" text="Oops, No Samples found for selected category."></app-ceryx-icon>
         </span>
         <mat-grid-list cols="3" rowHeight="300" gutterSize="20">
           <mat-grid-tile *ngFor="let sample of categorySamples">

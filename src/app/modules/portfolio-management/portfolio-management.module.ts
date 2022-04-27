@@ -24,6 +24,7 @@ import { CreatePortfolioModalComponent } from './add-portfolio/create-portfolio-
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {CalendarModule} from 'primeng-lts/calendar';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.module';
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
@@ -54,6 +55,7 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     MatCheckboxModule,
     CalendarModule,
     ClipboardModule,
+    CeryxSharedModule,
   ]
 })
 export class PortfolioManagementModule { }
