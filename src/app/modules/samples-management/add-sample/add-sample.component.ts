@@ -24,6 +24,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   files1: TreeNode[] = [];
   selectedFile: TreeNode;
   nodeService: any;
+  uploadedAllFiles: any[] = []
   uploadedFiles: any[] = []
   uploadedImageFiles: any[] = []
   currentCategory;
@@ -66,18 +67,29 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isEditMode = data.isEditMode
           this._sampleId = this.activatedRoute.snapshot.paramMap.get('id')
           console.log(this._sampleId, ' 222 ', this.isEditMode);
+          this.isSampleUploaded = true;
           this.loadSample(this._sampleId)
       }
     })
   }
+
 
   loadSample(sampleId) {
     let sampleSub = this.commonService.getRow('sample/' + sampleId).subscribe(res => {
       console.log(res);
       this.includeInDefaultPortfolio = res.include_in_default_portfolio;
       this.excludeFromSamplesSelection = res.in_staff_portfolio;
-      this.uploadedFiles = res.uploadedFiles.filter(file => !file.includes(".jpg") && !file.includes(".png"));
-      this.uploadedImageFiles = res.uploadedFiles.filter(file => file.includes(".jpg") || file.includes(".png"));
+      this.uploadedAllFiles = res.uploadedFiles;
+      let uploadedFilesRaw = res.uploadedFiles.filter(file => file.includes(".html"));
+      uploadedFilesRaw.forEach(element => {
+        this.uploadedFiles.push(element.replace(this._sampleId + '/', ''))
+      });
+      
+      this.launchUrl = res.launchUrl;
+      this.name = res.name;
+      this.details = res.details;
+      this.tags = res.tags;
+      this.sampleId = sampleId
     });
     this.subscriptions.push(sampleSub)
   }
@@ -99,19 +111,32 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     // Change event
     this.wizard.on('change', () => {
       //console.log(this.wizard.getStep());
-      if (this.wizard.getStep() == 4) {
+      let finalStep = this.isEditMode ? 3 : 4;
+      if (this.wizard.getStep() == finalStep) {
         this.isFinalStep = true;
         this.cd.detectChanges();
         this.updateSampleInfo();
-      } else if (this.wizard.getStep() == 1) {
+      } else if (!this.isEditMode && this.wizard.getStep() == 1) {
         if (!this.isSampleUploaded) {
           this.uploadSampleFile();
         }
+      } else if ((this.isEditMode && this.wizard.getStep() == 1) || (!this.isEditMode && this.wizard.getStep() == 2)) {
+        // Load the images
+        this.loadThumbnailImages();
       }
       setTimeout(() => {
         KTUtil.scrollTop();
       }, 500);
     });
+  }
+
+  loadThumbnailImages() {
+    this.uploadedImageFiles = [];
+    let uploadedImageFilesRaw = this.uploadedAllFiles.filter(file => file.includes(".jpg") || file.includes(".png"));
+      uploadedImageFilesRaw.forEach(element => {
+        this.uploadedImageFiles.push(element.replace(this._sampleId + '/', '/'))
+      });
+      this.cd.detectChanges();
   }
 
   loadCategories() {
@@ -191,8 +216,9 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   getUploadedSampleDetails() {
     let getSub = this.commonService.getRow(`sample/${this.sampleId}`).subscribe(res => {
       console.log(res, 'sample response');
-      this.uploadedFiles = res.uploadedFiles.filter(file => !file.includes(".jpg") && !file.includes(".png"));
-      this.uploadedImageFiles = res.uploadedFiles.filter(file => file.includes(".jpg") || file.includes(".png"));
+      this.uploadedAllFiles = res.uploadedFiles;
+      this.uploadedFiles = res.uploadedFiles.filter(file => file.includes(".html"));
+      this.loadThumbnailImages();      
       this.cd.detectChanges();
     });
     this.subscriptions.push(getSub);
