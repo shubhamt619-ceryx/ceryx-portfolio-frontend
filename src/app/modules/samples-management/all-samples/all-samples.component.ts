@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng-lts/api';
 import { Subscription } from 'rxjs';
@@ -47,10 +47,7 @@ export class AllSamplesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   editSample(sample){
-    this.router.navigate(['/samples-management/edit-sample'], {state: {data: {
-      isEditMode: true,
-      sampleId: sample._id
-    }}});
+    this.router.navigate(['/samples-management/edit-sample/' + sample._id]);
   }
 
   loadAllSamples() {
@@ -73,8 +70,6 @@ export class AllSamplesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-
   ngOnDestroy() {
   }
-
 }

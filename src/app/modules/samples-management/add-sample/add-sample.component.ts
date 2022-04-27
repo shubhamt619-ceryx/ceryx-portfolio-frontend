@@ -6,6 +6,8 @@ import { MessageService, TreeNode } from 'primeng-lts/api';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute } from '@angular/router';
+import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-sample',
@@ -40,6 +42,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   isSampleUploaded = false;
   isFinalStep = false;
   isEditMode = false;
+  _sampleId = "";
   state:any;
   tags:any[] = [];
   baseUrl = environment.s3BaseUrl;
@@ -49,15 +52,32 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     private messageService: MessageService,
     private commonService: CommonService,
     private cd: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
-    
+    this.loadMode()
     this.loadCategories();
   }
 
   loadMode() {
-    
+    this.activatedRoute.data.subscribe(data => {
+      if (Object.keys(data).length) {
+          this.isEditMode = data.isEditMode
+          this._sampleId = this.activatedRoute.snapshot.paramMap.get('id')
+          console.log(this._sampleId, ' 222 ', this.isEditMode);
+          this.loadSample(this._sampleId)
+      }
+    })
+  }
+
+  loadSample(sampleId) {
+    let sampleSub = this.commonService.getRow('sample/' + sampleId).subscribe(res => {
+      console.log(res);
+      this.includeInDefaultPortfolio = res.include_in_default_portfolio;
+      //this.excludeFromSamplesSelection = res.;
+    });
+    this.subscriptions.push(sampleSub)
   }
 
   ngAfterViewInit() {
@@ -108,6 +128,8 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
       "tags" : this.tags,
       "thumbnail" : this.thumbnail[0],
       "link" : this.launchUrl[0],
+      "in_staff_portfolio": this.excludeFromSamplesSelection,
+      "include_in_default_portfolio": this.includeInDefaultPortfolio,
     }
     let saveSub = this.commonService.fetchRow("sample/update", sampleData).subscribe(res => {
       this.messageService.clear()
@@ -126,11 +148,10 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
         "tags": [],
         "category": random,
         "include_portfolio": [random],
-        "in_staff_portfolio": false,
+        "in_staff_portfolio": this.excludeFromSamplesSelection,
         "createdBy": random,
         "fileName": this.files[0].name,
         "include_in_default_portfolio": this.includeInDefaultPortfolio,
-        "exclude_from_sample_selection": this.excludeFromSamplesSelection,
        };
       let fileSub = this.commonService.fetchRow("sample/create", fileDetails).subscribe(res => {
         console.log(res, 'file res');

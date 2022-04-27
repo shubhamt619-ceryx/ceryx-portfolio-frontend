@@ -19,9 +19,6 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { AuthService } from './_ceryx/services/auth.service';
-import {ButtonModule} from 'primeng-lts/button';
-import {TableModule} from 'primeng-lts/table';
-import {ToastModule} from 'primeng-lts/toast';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -56,10 +53,6 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
-    //PrimeNg
-    TableModule,
-    ButtonModule,
-    ToastModule,
   ],
   providers: [
     {

@@ -9,6 +9,7 @@
   </div>
   <div class="card-body">
     <mat-grid-list cols="3" gutterSize="15" rowHeight="350">
+      <app-ceryx-icon icon="no_data" text="No Samples found"></app-ceryx-icon>
     <mat-grid-tile *ngFor="let sample of samples">
       <p-card [style]="{width: '300px'}" styleClass="p-card-shadow">
         <ng-template pTemplate="header">

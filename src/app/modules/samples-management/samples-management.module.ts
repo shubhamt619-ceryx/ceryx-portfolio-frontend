@@ -21,6 +21,7 @@ import { MessagesModule } from 'primeng-lts/messages';
 import { MessageModule } from 'primeng-lts/message';
 import {ChipsModule} from 'primeng-lts/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MessageModule,
     ChipsModule,
     MatCheckboxModule,
+    CeryxSharedModule,
   ]
 })
 export class SamplesManagementModule { }

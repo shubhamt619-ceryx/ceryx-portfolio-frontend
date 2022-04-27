@@ -14,8 +14,11 @@ const routes: Routes = [
         component: AddSampleComponent,
       },
       {
-        path: 'edit-sample',
+        path: 'edit-sample/:id',
         component: AddSampleComponent,
+        data: {
+          isEditMode: true
+        }
       },
       {
         path: 'all-samples',
