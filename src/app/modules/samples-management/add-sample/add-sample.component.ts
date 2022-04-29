@@ -123,9 +123,9 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
           this.uploadSampleFile();
         }
       } else if (!this.isEditMode && this.wizard.getStep() === 3) {
-        // wizardObj.stop();
+        wizardObj.stop();
         // Upload thumbnail sample creation
-        // this.uploadSampleThumbnail();
+        this.uploadSampleThumbnail();
         this.messageService.clear();
       } else if (this.isEditMode && this.wizard.getStep() === 2) {
         // wizardObj.stop();
@@ -208,7 +208,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.thumbnailFiles.length === 1){
       const thumbnailDetails = {
         sampleId: this.sampleId,
-        thumbnail: this.thumbnailFiles[0].name
+        thumbnail: this.sampleId + '/' + this.thumbnailFiles[0].name
       };
       const fileSub = this.commonService.fetchRow('sample/update', thumbnailDetails).subscribe(res => {
         this.uploadSampleThumbnailPutCall(res.thumbnail_uri);
@@ -234,7 +234,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   saveSampleFile() {
     const data = {
-      sampleId : this.sampleId
+      sampleId : this.sampleId,
     };
     const saveSub = this.commonService.patchRow('sample/upload', data).subscribe(res => {
       console.log(res, 'sample response');
@@ -250,6 +250,7 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   saveSampleThumbnail() {
     const data = {
       sampleId : this.sampleId,
+      thumbnail: this.sampleId + '/' + this.thumbnailFiles[0].name
     };
     const saveSub = this.commonService.patchRow('sample/thumbnail-upload', data).subscribe(res => {
       this.messageService.clear();
