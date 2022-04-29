@@ -9,8 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 
 export class CeryxIconComponent implements OnInit {
-    @Input('icon') icon: string = "empty";
-    @Input('text') text: string = "empty";
+    @Input() icon = 'empty';
+    @Input() text = 'empty';
     constructor(
     ) { }
 
@@ -18,6 +18,6 @@ export class CeryxIconComponent implements OnInit {
     console.log(this.icon, '222');
   }
 
- 
+
 
 }

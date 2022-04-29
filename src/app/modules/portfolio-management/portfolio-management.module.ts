@@ -25,6 +25,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {CalendarModule} from 'primeng-lts/calendar';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.module';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
@@ -56,6 +59,9 @@ import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.modu
     CalendarModule,
     ClipboardModule,
     CeryxSharedModule,
+    MatTreeModule,
+    MatButtonModule,
+    MatIconModule,
   ]
 })
 export class PortfolioManagementModule { }

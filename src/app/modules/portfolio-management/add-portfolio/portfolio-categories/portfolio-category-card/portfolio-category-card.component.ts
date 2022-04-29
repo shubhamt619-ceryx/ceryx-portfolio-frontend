@@ -20,13 +20,11 @@ export class PortfolioCategoryCardComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    
   }
   launchSample(sample){
-    let launchUrl =  this.baseUrl + sample.link;
+    const launchUrl =  this.baseUrl + sample._id + '/' + sample.link;
     window.open(launchUrl, '_blank');
   }
-  
   emitSampleSelected(){
     this.sample.isSelected = !this.sample.isSelected;
     if (this.sample.isSelected) {

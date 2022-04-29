@@ -23,6 +23,7 @@ import {ChipsModule} from 'primeng-lts/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatCheckboxModule,
     MatTabsModule,
     CeryxSharedModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class SamplesManagementModule { }

@@ -30,36 +30,37 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
     ) { }
 
   ngOnInit(): void {
-    
   }
 
   copyPortfolioLink(portfolio) {
     this.clipboard.copy(this.viewerUrl + portfolio.link);
-    this.messageService.clear()
-      this.messageService.add({ severity: 'success', summary: 'Link copied', detail: 'Link was copied successfully', life: 2000 });
+    this.messageService.clear();
+    this.messageService.add({ severity: 'success', summary: 'Link copied', detail: 'Link was copied successfully', life: 1000 });
   }
 
   loadPortfolios() {
   this.loading = true;
-   let dSub = this.commonService.getRows('portfolio/list').subscribe(res => {
+  const dSub = this.commonService.getRows('portfolio/list').subscribe(res => {
       this.portfolios = res.items;
       this.loading = false;
-      this.cd.detectChanges()
-    });
-    this.subscriptions.push(dSub);
+      this.cd.detectChanges();
+  });
+  this.subscriptions.push(dSub);
   }
 
   viewPortfolio(portfolio){
-    let launchUrl =  this.viewerUrl + portfolio.link;
+    const launchUrl =  this.viewerUrl + portfolio.link;
     window.open(launchUrl, '_blank');
   }
 
   deletePortfolio(portfolio) {
     const modalRef = this.modalService.open(DeletePortfolioModalComponent);
     modalRef.componentInstance._id = portfolio.link;
-    modalRef.result.then((result) => {
-        this.loadPortfolios()
-     }, () => {}).catch(err => { 
+    modalRef.result.then(() => {
+        this.messageService.clear();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Portfolio was deleted successfully', life: 1000 });
+        this.loadPortfolios();
+     }, () => {}).catch(err => {
       console.log(123);
      });
   }
@@ -67,13 +68,10 @@ export class AllPortfoliosComponent implements OnInit, AfterViewInit, OnDestroy 
   clear(table: Table) {
     table.clear();
   }
-
   ngAfterViewInit() {
     this.loadPortfolios();
   }
-
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());
   }
-
 }

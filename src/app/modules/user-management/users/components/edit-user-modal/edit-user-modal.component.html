@@ -93,9 +93,9 @@
           <label>Select Role</label>
           <select class="form-control form-control-lg form-control-solid" name="role"
             [class.is-invalid]="isControlInvalid('role')" formControlName="role" placeholder="Please select Role">
-            <option value="superuser" disabled>Please select Role</option>
-            <option value="superuser">super Admin</option>
-            <option value="staffuser">User Admin</option>
+            <option value="" disabled>Please select Role</option>
+            <option value="superadmin">super Admin</option>
+            <option value="staffadmin">User Admin</option>
           </select>
           <div class="feedback">Please select <b>Role</b></div>
         </div>
