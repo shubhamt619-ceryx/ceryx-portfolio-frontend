@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 
@@ -7,38 +7,12 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
-interface FoodNode {
+interface CategoryNode {
+  _id: string;
   name: string;
-  children?: FoodNode[];
+  children?: CategoryNode[];
+  active?: boolean;
 }
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'All',
-  },
-  {
-    name: 'Games',
-    children: [{name: '2D Games'}, {name: '3D Games'}, {name: 'Unity 3D'}],
-  },
-  {
-    name: 'Graphic Design',
-    children: [
-      {
-        name: 'Graphics',
-        children: [{name: 'Vector Graphics'}, {name: 'illustrations'}],
-      },
-    ],
-  },
-  {
-    name: 'Cloud Computing',
-    children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
-  },
-  {
-    name: 'Artificial_intelligence',
-    children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
-  },
-];
-
 
 @Component({
   selector: 'app-portfolio-categories',
@@ -47,16 +21,25 @@ const TREE_DATA: FoodNode[] = [
 })
 export class PortfolioCategoriesComponent implements OnInit, OnDestroy{
 
-  @Input('categories') categories: any[] = [];
+  @Input('categories') categories: CategoryNode[] = [];
+  @Input() categoriesSubject: Subject<any> = new Subject<any>();
   @Output() categoryClicked = new EventEmitter<string>();
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
-  constructor() {
-    this.dataSource.data = TREE_DATA;
+  subscriptions: Subscription[] = [];
+  treeControl = new NestedTreeControl<CategoryNode>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<CategoryNode>();
+  constructor(
+  ) {
+    this.dataSource.data = this.categories;
   }
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: CategoryNode) => !!node.children && node.children.length > 0;
 
   ngOnInit(){
+    console.log(this.categories, 123);
+    const dSub = this.categoriesSubject.subscribe(res => {
+      this.categories = res.categories;
+      this.dataSource.data = this.categories;
+    });
+    this.subscriptions.push(dSub);
 
   }
 

@@ -121,10 +121,24 @@
               </div>
               <div class="form-group">
                 <label>Categories</label>
-                <select name="" class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
-                  <option value="" disabled selected>Select a Category</option>
-                  <option [ngValue]="thisCategory" *ngFor="let thisCategory of categories">{{ thisCategory.name }}</option>
-                </select>
+<!--                <select name="" class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">-->
+<!--                  <option value="" disabled selected>Select a Category</option>-->
+<!--                  <option [ngValue]="thisCategory" *ngFor="let thisCategory of categories">{{ thisCategory.name }}</option>-->
+<!--                </select>-->
+                <ng-select [items]="categories"
+                           [addTag]="addCategoryRef"
+                           bindLabel="name"
+                           [loading]="loading"
+                           [ngModelOptions]="{standalone: true}"
+                           [(ngModel)]="category"
+                           placeholder="Select city"
+                           (clear)="clearSelectedCategory();"
+                >
+
+                  <ng-template ng-tag-tmp let-search="searchTerm">
+                    <b>Create new category</b>: {{search}} (Also supports <b>parent > child</b>)
+                  </ng-template>
+                </ng-select>
               </div>
               <div class="form-group">
                 <label>Tags</label>
@@ -150,7 +164,7 @@
               <div class="border-bottom mb-5 pb-5">
                 <div class="font-weight-bolder mb-3">Sample Entry Point:</div>
                 <div class="line-height-xl">
-                  <a target="_blank" href="{{ baseUrl }}{{ launchUrl }}">{{ baseUrl }}{{ sampleId }}{{ launchUrl }}</a>
+                  <a target="_blank" href="{{ baseUrl }}{{ sampleId }}/{{ launchUrl }}">{{ baseUrl }}{{ sampleId }}/{{ launchUrl }}</a>
                 </div>
               </div>
               <div class="border-bottom mb-5 pb-5">

@@ -6,6 +6,6 @@ export const environment = {
   //apiUrl: 'http://103.148.157.103:8081/'
   apiUrl: 'http://13.234.70.155:5000/',
   s3BaseUrl : 'https://s3tomb1.s3.ap-south-1.amazonaws.com/',
-  viewerUrl: 'http://localhost:4300/'
+  viewerUrl: 'http://localhost:4300/?shortid='
   // apiUrl: 'mysite.com/api'
 };

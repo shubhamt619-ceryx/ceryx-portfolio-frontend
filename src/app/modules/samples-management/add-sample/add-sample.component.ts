@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('wizard', { static: true }) el: ElementRef;
   submitted = false;
+  loading = false;
   isSampleUploading = false;
   isThumbnailUploading = false;
   wizard: any;
@@ -45,15 +46,20 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   isEditMode = false;
   state: any;
   tags: any[] = [];
+  flatArr = [];
+  currentParentStr = '';
   baseUrl = environment.s3BaseUrl;
   categories: any[] = [];
+  public addCategoryRef: (name) => void;
 
   constructor(
     private messageService: MessageService,
     private commonService: CommonService,
     private cd: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
-    ) { }
+    ) {
+    this.addCategoryRef = (name) => this.addCategory(name);
+  }
 
   ngOnInit(): void {
     this.loadMode();
@@ -71,6 +77,40 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
+
+  clearSelectedCategory() {
+    this.category = {
+      _id: 0,
+      name: 'Please select category'
+    };
+  }
+
+  addCategory(name) {
+      console.log('Inside addCategory');
+      this.loading = true;
+      // Backend call.
+      // resolve({ id: 5, name, valid: true });
+      // this.loading = false;
+      const createdBy = '62614f71c8c39e1c4b956bbf';
+      if (name.includes('>')) {
+        const data = { name , createdBy};
+        const dSub = this.commonService.fetchRow('category/createhierarchy', data).subscribe(res => {
+          console.log('Created');
+          this.loading = false;
+          this.loadCategories();
+        });
+        this.subscriptions.push(dSub);
+      } else {
+        const data = { name , createdBy};
+        const dSub = this.commonService.fetchRow('category/create', data).subscribe(res => {
+          console.log('Created');
+          this.loading = false;
+          this.loadCategories();
+        });
+        this.subscriptions.push(dSub);
+      }
+  }
+
 
 
   loadSample(sampleId) {
@@ -153,11 +193,53 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadCategories() {
-    const dSub = this.commonService.getRows('category/list').subscribe(res => {
-       this.categories = res.items;
+
+    this.categories = [];
+    // this.categories.push({ _id: 0, name: 'Please select category'});
+    const dSub = this.commonService.getRows('category/gethierarchy').subscribe(res => {
+       this.flatArr = [];
+       this.currentParentStr = '';
+       console.log('Res items', res.items);
+       this.processCategories(res.items);
+       console.log('FlatArray is', this.flatArr);
+       this.categories = this.flatArr;
        this.cd.detectChanges();
      });
     this.subscriptions.push(dSub);
+   }
+
+   processCategories(allCat) {
+     console.log('Got categories as ', allCat);
+     if (Array.isArray(allCat)) {
+       allCat.forEach((category) => {
+         console.log('category', category, category.hasOwnProperty('children'));
+         if (category.hasOwnProperty('children')) {
+
+           for (let i = 0; i < category.children.length; i++) {
+             this.currentParentStr += category.name + ' > ';
+             this.processCategories(category.children[i], category);
+           }
+         } else {
+           this.currentParentStr += '';
+           this.processCategories(category, );
+         }
+       });
+     } else {
+       if (allCat.hasOwnProperty('children')) {
+         for (let i = 0; i < allCat.children.length; i++) {
+           this.currentParentStr += allCat.name + ' > ';
+           this.processCategories(allCat.children[i], allCat);
+         }
+       } else {
+         this.flatArr.push({
+           _id: allCat._id,
+           name: this.currentParentStr + allCat.name,
+         });
+         this.currentParentStr = '';
+       }
+
+     }
+
    }
 
   updateSampleInfo() {

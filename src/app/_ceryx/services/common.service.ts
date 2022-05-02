@@ -86,7 +86,6 @@ export class CommonService {
               })
         );
     }
-
     public fetchRow(url:string, data:{}): Observable < any > {
         const httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',

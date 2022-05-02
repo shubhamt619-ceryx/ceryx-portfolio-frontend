@@ -24,6 +24,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-s
     MatTabsModule,
     CeryxSharedModule,
     MatProgressSpinnerModule,
+    NgSelectModule,
   ]
 })
 export class SamplesManagementModule { }

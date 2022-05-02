@@ -2,9 +2,8 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { MessageService } from 'primeng-lts/api';
-import { Subscription } from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
-import { DeletePortfolioModalComponent } from '../delete-portfolio-modal/delete-portfolio-modal.component';
 import { CreatePortfolioModalComponent } from './create-portfolio-modal/create-portfolio-modal.component';
 @Component({
   selector: 'app-add-portfolio',
@@ -18,6 +17,7 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
   subscriptions: Subscription[] = [];
   categorySamples: any[] = [];
   selectedSamples: any[] = [];
+  categoriesSubject: Subject<any> = new Subject<any>();
 
   constructor(
     private messageService: MessageService,
@@ -27,21 +27,22 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    //this.createPortfolio()
+    // this.createPortfolio()
     this.loadCategories();
   }
 
   loadCategories() {
-   let dSub = this.commonService.getRows('category/list').subscribe(res => {
-      this.categories = res.items;
-      this.loadCategorySamples(this.categories[0])
-      this.cd.detectChanges()
+   const dSub = this.commonService.getRows('category/gethierarchy').subscribe(res => {
+     this.categories = res.items;
+     this.loadCategorySamples(this.categories[0]);
+     this.categoriesSubject.next({categories: this.categories});
+     this.cd.detectChanges();
     });
-    this.subscriptions.push(dSub);
+   this.subscriptions.push(dSub);
   }
 
   addToSelectedSamples(sample) {
-    this.selectedSamples.push(sample)
+    this.selectedSamples.push(sample);
   }
 
   removeSelectedSample(sample) {
@@ -49,25 +50,27 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadCategorySamples(category) {
-    let dSub = this.commonService.getRows(`sample/list?category=${category.name}`).subscribe(res => {
+    console.log('Loading samples for the category ' , category);
+    const dSub = this.commonService.getRows(`sample/list?category=${category.name}`).subscribe(res => {
       this.categorySamples = this._appendSelectedState(res.items);
-      this.cd.detectChanges()
+      this.cd.detectChanges();
     });
     this.subscriptions.push(dSub);
   }
 
   _appendSelectedState(categorySamples) {
-    let samplesToReturn = []
+    console.log("category samples are ", categorySamples);
+    const samplesToReturn = [];
     categorySamples.forEach(thisSample => {
       if (this.selectedSamples.filter(function(e) { return e._id === thisSample._id; }).length > 0) {
         thisSample.isSelected = true;
       }
-      samplesToReturn.push(thisSample)
+      samplesToReturn.push(thisSample);
     });
     return samplesToReturn;
   }
   _collectSelectedSampleIds(selectedSamples) {
-    let sampleIds = [];
+    const sampleIds = [];
     selectedSamples.forEach(sample => {
       sampleIds.push(sample._id);
     });
@@ -77,8 +80,8 @@ export class AddPortfolioComponent implements OnInit, AfterViewInit, OnDestroy {
     const modalRef = this.modalService.open(CreatePortfolioModalComponent, { size: 'lg' });
     modalRef.componentInstance.selectedSamples = this._collectSelectedSampleIds(this.selectedSamples);
     modalRef.result.then((result) => {
-        
-     }, () => {}).catch(err => { 
+
+     }, () => {}).catch(err => {
       console.log(123);
      });
   }

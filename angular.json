@@ -38,7 +38,8 @@
               "src/styles.scss",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng-lts/resources/themes/saga-blue/theme.css",
-              "node_modules/primeng-lts/resources/primeng.min.css"
+              "node_modules/primeng-lts/resources/primeng.min.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": [
               "node_modules/apexcharts/dist/apexcharts.min.js",

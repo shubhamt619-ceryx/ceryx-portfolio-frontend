@@ -4,6 +4,7 @@
   <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px" id="kt_profile_aside">
     <app-portfolio-categories
     [categories]="categories"
+    [categoriesSubject]="categoriesSubject" 
     (categoryClicked)="loadCategorySamples($event)"
     ></app-portfolio-categories>
   </div>

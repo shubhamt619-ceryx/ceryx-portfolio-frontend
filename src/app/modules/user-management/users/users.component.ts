@@ -88,7 +88,7 @@ export class UsersComponent implements
       else {
         this.user._id = this.createId();
         this.users.push(this.user);
-        this.messageService.clear()
+        this.messageService.clear();
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'User created successfully', life: 3000 });
       }
 

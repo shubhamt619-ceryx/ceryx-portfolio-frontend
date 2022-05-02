@@ -24,7 +24,7 @@ const EMPTY_USER: UserModel = new UserModel();
 })
 export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() user: UserModel;
-  
+
   isLoading$;
   formGroup: FormGroup;
   isNewUser = false;
@@ -43,7 +43,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
   ngAfterViewInit(): void {
   }
 
-  
+
 
   loadUser() {
     this.isLoading$ = true;
@@ -54,8 +54,8 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
       this.isNewUser = true;
       this.loadForm();
     } else {
-      let dataToPost = { email: this.user.email };
-      const sb = this.commonService.fetchRow("user/userdetails", dataToPost).subscribe((user: UserModel) => {
+      const dataToPost = { email: this.user.email };
+      const sb = this.commonService.fetchRow('user/userdetails', dataToPost).subscribe((user: UserModel) => {
         this.user = user;
         console.log(this.user, 'this.user');
         this.isNewUser = false;
@@ -72,7 +72,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
       password: [this.user.password, Validators.compose([Validators.required])],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
       mobileNumber: [this.user.mobileNumber, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
-      role: ["0", Validators.compose([Validators.required])],
+      role: ['0', Validators.compose([Validators.required])],
     });
   }
 
@@ -82,25 +82,27 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
       this.edit();
     } else {
       this.create();
-      
+
     }
-    
+
   }
 
   close(){
-    this.modal.close()
+    this.modal.close();
   }
 
   edit() {
-    const sb = this.commonService.patchRow("user/profile", this.user).subscribe((res: JsonResponseModel) => {
+    const sb = this.commonService.patchRow('user/profile', this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
       // User updated success
     });
     this.subscriptions.push(sb);
   }
- 
+
   create() {
-    const sb = this.commonService.fetchRow("user/register", this.user).subscribe((res: JsonResponseModel) => {
+    const userWithoutId = this.user;
+    delete userWithoutId._id;
+    const sb = this.commonService.fetchRow('user/register', this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
       // User created success
       this.modal.close();
@@ -110,7 +112,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private prepareUser() {
     const formData = this.formGroup.value;
-    this.user.createdBy = "624ae77e2001216640db5fb9"
+    this.user.createdBy = '624ae77e2001216640db5fb9';
     this.user.email = formData.email;
     this.user.name = formData.name;
     this.user.role = formData.role;

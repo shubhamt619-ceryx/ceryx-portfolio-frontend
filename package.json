@@ -27,6 +27,7 @@
         "@auth0/angular-jwt": "^5.0.2",
         "@fortawesome/fontawesome-free": "^5.15.1",
         "@ng-bootstrap/ng-bootstrap": "^9.1.0",
+        "@ng-select/ng-select": "~6.1.0",
         "@ngx-translate/core": "^13.0.0",
         "angular-in-memory-web-api": "^0.11.0",
         "apexcharts": "3.33.0",
