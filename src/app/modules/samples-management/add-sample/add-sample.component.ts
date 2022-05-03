@@ -196,51 +196,51 @@ export class AddSampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.categories = [];
     // this.categories.push({ _id: 0, name: 'Please select category'});
-    const dSub = this.commonService.getRows('category/gethierarchy').subscribe(res => {
+    const dSub = this.commonService.getRows('category/getCategoryList').subscribe(res => {
        this.flatArr = [];
-       this.currentParentStr = '';
-       console.log('Res items', res.items);
-       this.processCategories(res.items);
-       console.log('FlatArray is', this.flatArr);
-       this.categories = this.flatArr;
+      //  this.currentParentStr = '';
+      //  console.log('Res items', res.items);
+      //  this.processCategories(res.items);
+      //  console.log('FlatArray is', this.flatArr);
+       this.categories = res.items;
        this.cd.detectChanges();
      });
     this.subscriptions.push(dSub);
    }
 
-   processCategories(allCat) {
-     console.log('Got categories as ', allCat);
-     if (Array.isArray(allCat)) {
-       allCat.forEach((category) => {
-         console.log('category', category, category.hasOwnProperty('children'));
-         if (category.hasOwnProperty('children')) {
+  //  processCategories(allCat) {
+  //    console.log('Got categories as ', allCat);
+  //    if (Array.isArray(allCat)) {
+  //      allCat.forEach((category) => {
+  //        console.log('category', category, category.hasOwnProperty('children'));
+  //        if (category.hasOwnProperty('children')) {
 
-           for (let i = 0; i < category.children.length; i++) {
-             this.currentParentStr += category.name + ' > ';
-             this.processCategories(category.children[i], category);
-           }
-         } else {
-           this.currentParentStr += '';
-           this.processCategories(category, );
-         }
-       });
-     } else {
-       if (allCat.hasOwnProperty('children')) {
-         for (let i = 0; i < allCat.children.length; i++) {
-           this.currentParentStr += allCat.name + ' > ';
-           this.processCategories(allCat.children[i], allCat);
-         }
-       } else {
-         this.flatArr.push({
-           _id: allCat._id,
-           name: this.currentParentStr + allCat.name,
-         });
-         this.currentParentStr = '';
-       }
+  //          for (let i = 0; i < category.children.length; i++) {
+  //            this.currentParentStr += category.name + ' > ';
+  //            this.processCategories(category.children[i], category);
+  //          }
+  //        } else {
+  //          this.currentParentStr += '';
+  //          this.processCategories(category, );
+  //        }
+  //      });
+  //    } else {
+  //      if (allCat.hasOwnProperty('children')) {
+  //        for (let i = 0; i < allCat.children.length; i++) {
+  //          this.currentParentStr += allCat.name + ' > ';
+  //          this.processCategories(allCat.children[i], allCat);
+  //        }
+  //      } else {
+  //        this.flatArr.push({
+  //          _id: allCat._id,
+  //          name: this.currentParentStr + allCat.name,
+  //        });
+  //        this.currentParentStr = '';
+  //      }
 
-     }
+  //    }
 
-   }
+  //  }
 
   updateSampleInfo() {
     const sampleData = {

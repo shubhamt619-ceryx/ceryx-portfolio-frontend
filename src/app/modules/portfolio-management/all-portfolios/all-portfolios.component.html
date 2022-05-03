@@ -35,11 +35,16 @@
         </ng-template>
         <ng-template pTemplate="body" let-portfolio>
             <tr>
-                <td>{{portfolio.alias}}</td>
-                <td>{{portfolio.startDate}}</td>
+                <td>
+                  <span *ngIf="portfolio.isPasswordProtected">
+                    <mat-icon color="warn" aria-hidden="false" aria-label="This Portfolio is locked">locked</mat-icon>
+                  </span>
+                  {{portfolio.alias}}
+                </td>
+                <td>{{portfolio.startDate}}</td>  
                 <td>{{portfolio.endDate}}</td>
                 <td>
-                  <a href="{{viewerUrl}}{{portfolio.link}}" target="_blank">{{viewerUrl}}{{portfolio.link}}</a>
+                    <a href="{{viewerUrl}}{{portfolio.link}}" target="_blank">{{viewerUrl}}{{portfolio.link}}</a>
                 </td>
                 <td>
                   <div class="actions">

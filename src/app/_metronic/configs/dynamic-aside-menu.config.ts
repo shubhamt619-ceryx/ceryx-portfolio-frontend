@@ -16,17 +16,17 @@ export const DynamicAsideMenuConfig = {
       bullet: 'dot',
       icon: 'flaticon2-user-outline-symbol',
       svg: './assets/media/svg/icons/General/User.svg',
-      page: '/user-management',
-      submenu: [
-        {
-          title: 'Users',
-          page: '/user-management/users'
-        },
-        // {
-        //   title: 'Roles',
-        //   page: '/user-management/roles'
-        // }
-      ]
+      page: '/user-management/users',
+      // submenu: [
+      //   {
+      //     title: 'Users',
+      //     page: '/user-management/users'
+      //   },
+      //   // {
+      //   //   title: 'Roles',
+      //   //   page: '/user-management/roles'
+      //   // }
+      // ]
     },
     // { section: 'Sample Management' },
     {
@@ -35,17 +35,17 @@ export const DynamicAsideMenuConfig = {
       bullet: 'dot',
       icon: 'flaticon2-user-outline-symbol',
       svg: './assets/media/svg/icons/General/User.svg',
-      page: '/samples-management',
-      submenu: [
-        {
-          title: 'All Samples',
-          page: '/samples-management/all-samples'
-        },
-        {
-          title: 'Add Samples',
-          page: '/samples-management/add-sample'
-        },
-      ]
+      page: '/samples-management/all-samples',
+      // submenu: [
+      //   {
+      //     title: 'All Samples',
+      //     page: '/samples-management/all-samples'
+      //    }
+      //   // {
+      //   //   title: 'Add Samples',
+      //   //   page: '/samples-management/add-sample'
+      //   // },
+      // ]
     },   
     // { section: 'Portfolio Management' },
     {
@@ -54,17 +54,17 @@ export const DynamicAsideMenuConfig = {
       bullet: 'dot',
       icon: 'flaticon2-user-outline-symbol',
       svg: './assets/media/svg/icons/General/User.svg',
-      page: '/portfolio-management',
-      submenu: [
-        {
-          title: 'All Portfolios',
-          page: '/portfolio-management/all-portfolios'
-        },
-        {
-          title: 'Create portfolio',
-          page: '/portfolio-management/add-portfolio'
-        },
-      ]
+      page: '/portfolio-management/all-portfolios',
+      // submenu: [
+      //   {
+      //     title: 'All Portfolios',
+      //     page: '/portfolio-management/all-portfolios'
+      //   }
+      //   // {
+      //   //   title: 'Create portfolio',
+      //   //   page: '/portfolio-management/add-portfolio'
+      //   // },
+      // ]
     },   
   ]
 };

@@ -39,6 +39,7 @@ function appInitializer(authService: AuthService) {
     BrowserAnimationsModule,
     SplashScreenModule,
     TranslateModule.forRoot(),
+    // Specify your library as an import
     HttpClientModule,
     HighlightModule,
     ClipboardModule,
