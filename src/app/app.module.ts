@@ -19,6 +19,7 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { AuthService } from './_ceryx/services/auth.service';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -62,6 +63,7 @@ function appInitializer(authService: AuthService) {
       multi: true,
       deps: [AuthService],
     },
+    {provide : LocationStrategy , useClass: HashLocationStrategy},
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
