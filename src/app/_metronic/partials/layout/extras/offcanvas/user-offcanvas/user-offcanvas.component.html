@@ -26,7 +26,7 @@
             {{ _user.firstname }} {{ _user.lastname }}
           </a>
           <div class="text-muted mt-1">
-            Application Developer
+            {{ _user.role | titlecase }}
           </div>
           <div class="navi mt-2">
             <a href="#" class="navi-item">

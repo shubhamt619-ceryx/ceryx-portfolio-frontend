@@ -101,7 +101,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
     const userWithoutId = this.user;
     delete userWithoutId._id;
     const sb = this.commonService.fetchRow('user/register', this.user).subscribe((res: JsonResponseModel) => {
-      this.user = res.data;
+      this.user = res.data;  
       this.messageService.add({severity:'success', summary: 'Success', detail: 'User created successfully'});
       this.modal.close();
     });

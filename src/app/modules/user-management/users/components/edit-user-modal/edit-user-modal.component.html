@@ -1,6 +1,7 @@
 <div class="modal-content">
+  <p-toast position="top-center"></p-toast> 
+
   <div class="modal-header">
-    <p-toast></p-toast>
     <div class="modal-title h4" id="example-modal-sizes-title-lg">
       <ng-container *ngIf="user">
         <ng-container *ngIf="user._id">Edit</ng-container>
@@ -110,9 +111,7 @@
     Cancel
   </button>
   <ng-container *ngIf="formGroup">
-    <button type="submit" class="btn btn-primary btn-elevate" pButton pRipple  (click)="save()" [disabled]="formGroup.invalid">
-      Save
-    </button>
+    <button type="button" pButton pRipple (click)="save()" label="save" class="p-button-info mb-2" [disabled]="formGroup.invalid"></button>
   </ng-container>
 </div>
 </div>
