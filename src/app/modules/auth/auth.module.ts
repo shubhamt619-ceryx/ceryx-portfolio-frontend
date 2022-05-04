@@ -11,6 +11,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { AuthComponent } from './auth.component';
 import {TranslationModule} from '../i18n/translation.module';
 import { MaterialModule } from '../material/material.module';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MaterialModule } from '../material/material.module';
     CommonModule,
     TranslationModule,
     AuthRoutingModule,
+    NgxPermissionsModule.forChild(),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

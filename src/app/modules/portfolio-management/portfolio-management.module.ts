@@ -28,6 +28,7 @@ import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.modu
 import {MatTreeModule} from '@angular/material/tree';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { NgxPermissionsModule } from 'ngx-permissions';
 @NgModule({
   declarations: [
     PortfolioManagementComponent,
@@ -42,6 +43,7 @@ import {MatIconModule} from '@angular/material/icon';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPermissionsModule.forChild(),
     InlineSVGModule,
     PortfolioManagementRoutingModule,
     NgxDropzoneModule,

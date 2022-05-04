@@ -17,6 +17,7 @@ export const DynamicAsideMenuConfig = {
       icon: 'flaticon2-user-outline-symbol',
       svg: './assets/media/svg/icons/General/User.svg',
       page: '/user-management/users',
+      permission: 'superadmin'
       // submenu: [
       //   {
       //     title: 'Users',

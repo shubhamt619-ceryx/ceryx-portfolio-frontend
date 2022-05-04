@@ -21,6 +21,7 @@ import { CoreModule } from '../_metronic/core';
 import { SubheaderModule } from '../_metronic/partials/layout/subheader/subheader.module';
 import { AsideDynamicComponent } from './_layout/components/aside-dynamic/aside-dynamic.component';
 import { HeaderMenuDynamicComponent } from './_layout/components/header/header-menu-dynamic/header-menu-dynamic.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { HeaderMenuDynamicComponent } from './_layout/components/header/header-m
     CommonModule,
     PagesRoutingModule,
     TranslationModule,
+    NgxPermissionsModule.forChild(),
     InlineSVGModule,
     ExtrasModule,
     NgbDropdownModule,

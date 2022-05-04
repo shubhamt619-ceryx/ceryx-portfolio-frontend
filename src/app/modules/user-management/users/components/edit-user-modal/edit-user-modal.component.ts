@@ -78,13 +78,11 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   save() {
     this.prepareUser();
-    if (this.user._id != '') {
-      this.edit();
-    } else {
+    if (this.isNewUser) {
       this.create();
-
+    } else {
+      this.edit();
     }
-
   }
 
   close(){
@@ -94,7 +92,7 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
   edit() {
     const sb = this.commonService.patchRow('user/profile', this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
-      // User updated success
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'User updated successfully'});
     });
     this.subscriptions.push(sb);
   }
@@ -104,13 +102,13 @@ export class EditUserModalComponent implements OnInit, OnDestroy, AfterViewInit 
     delete userWithoutId._id;
     const sb = this.commonService.fetchRow('user/register', this.user).subscribe((res: JsonResponseModel) => {
       this.user = res.data;
-      // User created success
+      this.messageService.add({severity:'success', summary: 'Success', detail: 'User created successfully'});
       this.modal.close();
     });
     this.subscriptions.push(sb);
   }
 
-  private prepareUser() {
+  private prepareUser() { 
     const formData = this.formGroup.value;
     this.user.createdBy = '624ae77e2001216640db5fb9';
     this.user.email = formData.email;

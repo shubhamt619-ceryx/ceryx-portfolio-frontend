@@ -8,12 +8,15 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { Router } from '@angular/router';
 import { JsonResponseModel } from '../models/json-response.model';
 import { finalize, map } from 'rxjs/operators';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 
 const jwtHelper = new JwtHelperService();
 
 
 const baseUrl = environment.apiUrl;
+
+var user: any;
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -48,6 +51,7 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private router: Router,
+        private permissionService: NgxPermissionsService,
         ) {
             this.isLoadingSubject = new BehaviorSubject<boolean>(false);
             this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
@@ -75,6 +79,7 @@ export class AuthService {
 
       logout() {
         sessionStorage.removeItem(this.authLocalStorageToken);
+        this.permissionService.flushPermissions();
         this.router.navigate(['/auth/login'], {
           queryParams: {},
         });
@@ -86,6 +91,11 @@ export class AuthService {
     const expirationDate = jwtHelper.getTokenExpirationDate(authToken);
     const isExpired = jwtHelper.isTokenExpired(authToken);
     let decodedToken = jwtHelper.decodeToken(authToken)
+    if (decodedToken.role) {
+      console.log('Setting permissions');
+      this.permissionService.flushPermissions();
+      this.permissionService.loadPermissions([decodedToken.role.toString()]);
+    }
     decodedToken.authToken = authToken
     this.currentUserSubject = new BehaviorSubject<UserModel>(decodedToken);
     sessionStorage.setItem(this.authLocalStorageToken, JSON.stringify(decodedToken));

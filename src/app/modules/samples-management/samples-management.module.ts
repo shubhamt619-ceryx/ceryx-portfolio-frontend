@@ -25,6 +25,7 @@ import { CeryxSharedModule } from 'src/app/_ceryx/ceryx-shared/ceryx-shared.modu
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
 import {NgSelectModule} from '@ng-select/ng-select';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPermissionsModule.forChild(),
     InlineSVGModule,
     SamplesManagementRoutingModule,
     NgxDropzoneModule,

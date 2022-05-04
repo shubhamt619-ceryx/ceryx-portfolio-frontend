@@ -16,6 +16,7 @@ import { SplashScreenService } from './_metronic/partials/layout/splash-screen/s
 import { Router, NavigationEnd, NavigationError } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TableExtendedService } from './_metronic/shared/crud-table';
+import { NgxPermissionsService } from 'ngx-permissions';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'body[root]',
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private translationService: TranslationService,
     private splashScreenService: SplashScreenService,
     private router: Router,
-    private tableService: TableExtendedService
+    private tableService: TableExtendedService,
+    private permissionsService: NgxPermissionsService,
   ) {
     // register translations
     this.translationService.loadTranslations(

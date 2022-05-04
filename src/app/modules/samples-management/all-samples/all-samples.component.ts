@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { MessageService } from 'primeng-lts/api';
 import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/_ceryx/services/common.service';
@@ -26,6 +27,7 @@ export class AllSamplesComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: NgbModal,
     private cd: ChangeDetectorRef,
     private router: Router,
+    private permissionsService: NgxPermissionsService,
     ) { }
 
   ngOnInit(): void {

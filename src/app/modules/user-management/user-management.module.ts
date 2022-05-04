@@ -18,7 +18,9 @@ import { MessageModule } from 'primeng-lts/message';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { FetchUserModalComponent } from './users/components/fetch-user-modal/fetch-user-modal.component';
 import { MessageService } from 'primeng-lts/api';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
+import {ToastModule} from 'primeng-lts/toast';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { MessageService } from 'primeng-lts/api';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPermissionsModule.forChild(),
     CRUDTableModule,
     NgbDatepickerModule,
     InlineSVGModule,
@@ -43,6 +46,7 @@ import { MessageService } from 'primeng-lts/api';
     InputTextModule,
     MessagesModule,
     MessageModule,
+    ToastModule,
   ],
   entryComponents: [
     UsersComponent,

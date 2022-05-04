@@ -20,12 +20,21 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 import { FakeAPIService } from './_fake/fake-api.service';
 import { AuthService } from './_ceryx/services/auth.service';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 // #fake-end#
 
-function appInitializer(authService: AuthService) {
+function appInitializer(authService: AuthService, permissionService: NgxPermissionsService) {
   return () => {
+    console.log('APP INITIALIZED');
+    
     return new Promise((resolve) => {
-      authService.getUserByToken().subscribe().add(resolve);
+      authService.getUserByToken().subscribe((user) => {
+        if (user) {
+          console.log('Setting permissions from APP_INITIALIZER');
+          permissionService.flushPermissions();
+          permissionService.loadPermissions([user.role.toString()]);
+        }
+      }).add(resolve);
     });
   };
 }
@@ -55,13 +64,14 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
+    NgxPermissionsModule.forRoot(),
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
-      deps: [AuthService],
+      deps: [AuthService, NgxPermissionsService],
     },
     {provide : LocationStrategy , useClass: HashLocationStrategy},
     {
